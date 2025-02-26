@@ -1,8 +1,24 @@
 import { useForm } from "@mantine/form"
 import { Character } from "../Stores/CharacterStore"
-import { Button, Group, Popover, Stack, Stepper, Textarea, TextInput, Text, Divider, SimpleGrid, Tooltip } from "@mantine/core"
+import {
+  Button,
+  Group,
+  Popover,
+  Stack,
+  Stepper,
+  Textarea,
+  TextInput,
+  Text,
+  Divider,
+  SimpleGrid,
+  Tooltip,
+  NumberInput,
+  Paper,
+  em,
+} from "@mantine/core"
 import { useState } from "react"
 import { useThemeStore } from "../Stores/ThemeStore"
+import { useMediaQuery } from "@mantine/hooks"
 
 const basics = [
   { label: "Name", placeholder: "Geoff Jones", key: "name" },
@@ -13,13 +29,24 @@ const basics = [
   { label: "Other Aspect", placeholder: "I won't die without revealing the truth", key: "aspects.secondOtherAspect" },
 ]
 
+const stunts = [
+  { label: "Stunt 1", key: "stunt.0" },
+  { label: "Stunt 2", key: "stunt.1" },
+  { label: "Stunt 3", key: "stunt.2" },
+  { label: "Stunt 4", key: "stunt.3" },
+  { label: "Stunt 5", key: "stunt.4" },
+  { label: "Stunt 6", key: "stunt.5" },
+]
+
 const colors = ["gray", "red", "pink", "grape", "violet", "indigo", "blue", "cyan", "teal", "green", "lime", "yellow", "orange"] // Comes here https://yeun.github.io/open-color/
 
 function CreateCharacterModal() {
   const [active, setActive] = useState(0)
+  const [creatableStuntCount, setCreatableStuntCount] = useState<number>(3)
   const nextStep = () => setActive((current) => (current < 4 ? current + 1 : current))
   const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current))
 
+  const isMobile = useMediaQuery(`(max-width: ${em(1200)})`)
   const { themeColor, setThemeColor } = useThemeStore()
 
   const form = useForm<Character>({
@@ -27,7 +54,7 @@ function CreateCharacterModal() {
     initialValues: {
       id: "",
       name: "",
-      fatePoints: 6,
+      fatePoints: 3,
       physicalStress: [],
       maxPhysicalStress: 0,
       mentalStress: [],
@@ -44,6 +71,11 @@ function CreateCharacterModal() {
       theme: "",
     },
   })
+
+  form.watch("fatePoints", ({ value }) => {
+    setCreatableStuntCount(6 - value)
+  })
+
   return (
     <form>
       <Stepper active={active} onStepClick={setActive} size="xs" mt="xs">
@@ -51,7 +83,7 @@ function CreateCharacterModal() {
           <Stack>
             {basics.map((b) =>
               b.key === "name" ? (
-                <Group wrap="nowrap">
+                <Group key={b.key} wrap="nowrap">
                   <TextInput
                     size="md"
                     radius="md"
@@ -61,7 +93,7 @@ function CreateCharacterModal() {
                     {...form.getInputProps(b.key)}
                   ></TextInput>
                   <Stack w="50%" gap={2}>
-                    <Text fw={500}> Character Theme</Text>
+                    <Text fw={500}> Theme</Text>
                     <Popover>
                       <Popover.Target>
                         <Button fullWidth size="md" radius="md">
@@ -104,6 +136,41 @@ function CreateCharacterModal() {
                 ></Textarea>
               ),
             )}
+          </Stack>
+        </Stepper.Step>
+        <Stepper.Step label="Second Step" description="Create Your stunts">
+          <Stack gap="sm">
+            <NumberInput
+              allowNegative={false}
+              allowDecimal={false}
+              size="md"
+              radius="md"
+              label="Fate Points"
+              key={form.key("fatePoints")}
+              {...form.getInputProps("fatePoints")}
+            />
+            {isMobile && <Text size="xs">You can create '6 - fate point' amount of stunts</Text>}
+            <SimpleGrid mt="sm" cols={{ base: 1, sm: 1, lg: 2 }}>
+              {stunts.map((s, index) =>
+                index < creatableStuntCount ? (
+                  <Paper key={index} radius="md" h={120} p="md" withBorder>
+                    <Textarea
+                      label={s.label}
+                      placeholder="Write your stunt"
+                      variant="unstyled"
+                      key={form.key(s.key)}
+                      {...form.getInputProps(s.key)}
+                    ></Textarea>
+                  </Paper>
+                ) : (
+                  <Paper opacity={0.3} key={index} radius="md" h={120} p="md" withBorder>
+                    <Tooltip label="You can create '6 - fate point' amount of stunts">
+                      <Textarea disabled label={s.label} placeholder="Write your stunt" variant="unstyled"></Textarea>
+                    </Tooltip>
+                  </Paper>
+                ),
+              )}
+            </SimpleGrid>
           </Stack>
         </Stepper.Step>
       </Stepper>
