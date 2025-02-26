@@ -31,6 +31,8 @@ function CharacterSheet() {
   const [animate, setAnimate] = useState(false)
   const [isNotesView, setIsNotesView] = useState<boolean>(false)
   const [diceRolls, setDiceRolls] = useState<number[]>([1, 0, -1, 0])
+  const diceRollSum = diceRolls.reduce((acc, val) => acc + val, 0)
+  const [modifier, setModifier] = useState<number>(0)
   const { currCharacter } = useCharacterStore()
 
   const isMobile = useMediaQuery(`(max-width: ${em(1200)})`)
@@ -54,6 +56,11 @@ function CharacterSheet() {
       duration: 750,
     })
 
+    const { scrollIntoView: scrollIntoViewDice, targetRef: targetRefDice } = useScrollIntoView<HTMLDivElement>({
+      offset: 60,
+      duration: 750,
+    })
+
     function handleNotesView() {
       setIsNotesView((n) => !n)
       // TODO: Find better solution than setTimeout
@@ -66,9 +73,15 @@ function CharacterSheet() {
       }, 1)
     }
 
-    function handleDiceRoll() {
+    function handleDiceRoll(modifer: number) {
       setDiceRolls(RollDice())
+      setModifier(modifer)
       setAnimate(true)
+      if (isMobile) {
+        scrollIntoViewDice({
+          alignment: "start",
+        })
+      }
       setTimeout(() => {
         setAnimate(false)
       }, 250)
@@ -114,6 +127,7 @@ function CharacterSheet() {
                               <Checkbox
                                 size={b.maxVal > 7 ? (b.maxVal > 10 ? "xs" : "sm") : "md"}
                                 radius="xl"
+                                color="red"
                                 key={index}
                                 icon={IconCircleFilled}
                                 onChange={() => setPhysicalStress((v) => v.map((val, i) => (i === index ? !val : val)))}
@@ -177,7 +191,7 @@ function CharacterSheet() {
                     {consequences.map((c, index) => (
                       <Grid.Col span={{ base: 12, md: 2, lg: 2 }} key={c.text + index}>
                         <Text>{c.text}</Text>
-                        <Paper px="xs" withBorder>
+                        <Paper py="4" px="xs" withBorder>
                           <Group w="100%" gap="xs">
                             <Checkbox w="10%" size="md" radius="xl" icon={IconCircleFilled} />
                             <TextInput w="70%" variant="unstyled" />
@@ -193,8 +207,8 @@ function CharacterSheet() {
                 </Card>
                 <Card style={isMobile ? { textAlign: "center" } : undefined} withBorder shadow="sm" radius="md">
                   {isMobile ? (
-                    <Group w="100%" justify="center">
-                      <Group className="paper-hover" onClick={handleDiceRoll}>
+                    <Group ref={targetRefDice} w="100%" justify="center">
+                      <Group className="paper-hover" onClick={() => handleDiceRoll(0)}>
                         {diceRolls.map((d, index) => (
                           <Paper key={index} withBorder h={50} w={50} p="sm">
                             <span className={animate ? "dice-icon" : ""}>{d === 1 ? <IconPlus /> : d === -1 ? <IconMinus /> : null}</span>
@@ -202,7 +216,12 @@ function CharacterSheet() {
                         ))}
                       </Group>
                       <Text w={isMobile ? "100%" : undefined} style={{ justifySelf: "end" }} size="lg" fw={700}>
-                        Total: {(diceRolls.reduce((acc, val) => acc + val, 0) > 0 ? "+" : "") + diceRolls.reduce((acc, val) => acc + val, 0)}
+                        Total:{" "}
+                        {modifier === 0
+                          ? diceRollSum > 0
+                            ? "+" + diceRollSum
+                            : "" + diceRollSum
+                          : diceRollSum + " + " + modifier + " = " + (diceRollSum + modifier)}
                       </Text>
                     </Group>
                   ) : (
@@ -215,7 +234,7 @@ function CharacterSheet() {
                             transform: "translateX(-50%)",
                           }}
                           className="paper-hover"
-                          onClick={handleDiceRoll}
+                          onClick={() => handleDiceRoll(0)}
                         >
                           {diceRolls.map((d, index) => (
                             <Paper key={index} withBorder h={50} w={50} p="sm">
@@ -233,7 +252,12 @@ function CharacterSheet() {
                           size="lg"
                           fw={700}
                         >
-                          Total: {(diceRolls.reduce((acc, val) => acc + val, 0) > 0 ? "+" : "") + diceRolls.reduce((acc, val) => acc + val, 0)}
+                          Total:{" "}
+                          {modifier === 0
+                            ? diceRollSum > 0
+                              ? "+" + diceRollSum
+                              : "" + diceRollSum
+                            : diceRollSum + " + " + modifier + " = " + (diceRollSum + modifier)}
                         </Text>
                       </Group>
                     </Box>
@@ -247,7 +271,7 @@ function CharacterSheet() {
                   <Grid mt="xs">
                     {currCharacter.skills.map((s) => (
                       <Grid.Col span={{ base: 12, md: 4, lg: 3 }} key={s.name}>
-                        <Paper p="xs" withBorder className="paper-hover">
+                        <Paper onClick={() => handleDiceRoll(s.bonus)} p="xs" withBorder className="paper-hover">
                           <Group>
                             <IconCircle />
                             <Text size="sm">{s.name + ": " + (s.bonus === 0 ? 0 : "+" + s.bonus)}</Text>
