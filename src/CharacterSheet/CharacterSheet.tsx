@@ -16,7 +16,6 @@ import {
   Stack,
   Text,
   TextInput,
-  Title,
   Tooltip,
 } from "@mantine/core"
 import { IconCircle, IconCircleFilled, IconEdit, IconFile, IconMinus, IconNotebook, IconPlus } from "@tabler/icons-react"
@@ -25,6 +24,7 @@ import { useMediaQuery, useScrollIntoView } from "@mantine/hooks"
 import { useCharacterStore } from "../CharacterStore"
 import "./CharacterSheet.css"
 import { RollDice } from "./RollDice"
+import CharacterDetailsModal from "../Modals/CharacterDetailsModal"
 
 function CharacterSheet() {
   const [animate, setAnimate] = useState(false)
@@ -92,15 +92,7 @@ function CharacterSheet() {
           <Stack w="100%" gap="xs">
             <Card withBorder shadow="sm" radius="md">
               <Group pb="sm" style={{ position: "relative", width: "100%" }}>
-                <Title
-                  className="title-hover"
-                  style={isMobile ? { width: "100%", textAlign: "start", marginLeft: "auto" } : { width: "100%", textAlign: "center" }}
-                  size="h2"
-                  fw={900}
-                  c="var(--mantine-color-anchor)"
-                >
-                  {currCharacter.name}
-                </Title>
+                <CharacterDetailsModal isMobile={isMobile} />
                 <Group style={{ position: "absolute", right: 0 }} gap={0}>
                   <Tooltip label={isNotesView ? "Go sheet" : "Go notes"}>
                     <Button px="xs" size="xs" variant="transparent" onClick={handleNotesView}>

@@ -49,7 +49,13 @@ export const useCharacterStore = create<CharacterStore>()(
           severe: { text: "", check: false },
           secondMild: { text: "", check: false },
         },
-        aspects: { highConcept: "", trouble: "", relationship: "", otherAspect: "", secondOtherAspect: "" },
+        aspects: {
+          highConcept: "Noir tarzi sert ickili sert yumruklu dedektif",
+          trouble: "Gecmisimden kacamam ama onun beni yakalamasini izleyebilirim",
+          relationship: "",
+          otherAspect: "Bulletin deli tarafini kontrol edebilen tek kisiyim",
+          secondOtherAspect: "Gercekleri ortaya cilarmadan olmeyecegim",
+        },
         stunts: [
           "Bu sehirde herkesin hikayesi var (sorgularken + 2 rapport u sehirde herkesin hikayesi var (sorgularken + 2 rappor u sehirde herkesin hikayesi var (sorgularken + 2 rapporu sehirde herkesin hikayesi var (sorgularken + 2 rapporu sehirde herkesin hikayesi var (sorgularken + 2 rappor)",
           "Ilk kursun beni yikamaz",
