@@ -5,6 +5,8 @@ import { notifications } from "@mantine/notifications"
 import { useCopyToClipboard } from "usehooks-ts"
 import { useCharacterStore } from "../CharacterStore"
 import DeleteCharacterModal from "../Modals/DeleteCharacterModal"
+import { modals } from "@mantine/modals"
+import CreateCharacterSelectorModal from "../Modals/CreateCharacterSelectorModal"
 
 type NavbarAvatarProps = {
   size: string
@@ -50,7 +52,21 @@ function NavbarAvatar(props: NavbarAvatarProps) {
             <Menu.Label>Actions</Menu.Label>
             <Menu.Item leftSection={<IconPencil style={{ width: rem(14), height: rem(14) }} />}>Edit my character</Menu.Item>
             <Menu.Item leftSection={<IconSwitch2 style={{ width: rem(14), height: rem(14) }} />}>Change character</Menu.Item>
-            <Menu.Item leftSection={<IconPlus style={{ width: rem(14), height: rem(14) }} />}>Create new character</Menu.Item>
+            <Menu.Item
+              onClick={() =>
+                modals.open({
+                  title: "Which way do you want to create a character?",
+                  size: "md",
+                  padding: "xl",
+                  radius: "md",
+                  centered: true,
+                  children: <CreateCharacterSelectorModal />,
+                })
+              }
+              leftSection={<IconPlus style={{ width: rem(14), height: rem(14) }} />}
+            >
+              Create new character
+            </Menu.Item>
             <Menu.Item leftSection={<IconFileArrowRight style={{ width: rem(14), height: rem(14) }} />} onClick={handleExportCharacter}>
               Export your character
             </Menu.Item>

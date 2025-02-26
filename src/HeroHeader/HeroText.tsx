@@ -2,6 +2,8 @@ import { Title, Text, Button, Container, em, Tooltip } from "@mantine/core"
 import { Dots } from "./Dots"
 import classes from "./HeroText.module.css"
 import { useMediaQuery } from "@mantine/hooks"
+import { modals } from "@mantine/modals"
+import CreateCharacterSelectorModal from "../Modals/CreateCharacterSelectorModal"
 
 export function HeroText() {
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`)
@@ -44,7 +46,20 @@ export function HeroText() {
                 Select Character
               </Button>
             </Tooltip>
-            <Button className={classes.control} size="lg">
+            <Button
+              onClick={() =>
+                modals.open({
+                  title: "Which way do you want to create a character?",
+                  size: "md",
+                  padding: "xl",
+                  radius: "md",
+                  centered: true,
+                  children: <CreateCharacterSelectorModal />,
+                })
+              }
+              className={classes.control}
+              size="lg"
+            >
               Create Character
             </Button>
           </div>
