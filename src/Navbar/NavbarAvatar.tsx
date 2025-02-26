@@ -4,6 +4,7 @@ import { notifications } from "@mantine/notifications"
 
 import { useCopyToClipboard } from "usehooks-ts"
 import { useCharacterStore } from "../CharacterStore"
+import DeleteCharacterModal from "../Modals/DeleteCharacterModal"
 
 type NavbarAvatarProps = {
   size: string
@@ -55,9 +56,7 @@ function NavbarAvatar(props: NavbarAvatarProps) {
             </Menu.Item>
             <Menu.Divider />
             <Menu.Label>Danger zone</Menu.Label>
-            <Menu.Item color="red" leftSection={<IconTrash style={{ width: rem(14), height: rem(14) }} />}>
-              Delete my character
-            </Menu.Item>
+            <DeleteCharacterModal />
           </Menu.Dropdown>
         </Menu>
       </>
