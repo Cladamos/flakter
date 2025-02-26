@@ -40,7 +40,12 @@ export const useCharacterStore = create<CharacterStore>()(
         maxMentalStress: 7,
         consequences: { mild: "", moderate: "", severe: "", secondMild: "" },
         aspects: { highConcept: "", trouble: "", relationship: "", otherAspect: "", secondOtherAspect: "" },
-        stunts: [],
+        stunts: [
+          "Bu sehirde herkesin hikayesi var (sorgularken + 2 rapport u sehirde herkesin hikayesi var (sorgularken + 2 rappor u sehirde herkesin hikayesi var (sorgularken + 2 rapporu sehirde herkesin hikayesi var (sorgularken + 2 rapporu sehirde herkesin hikayesi var (sorgularken + 2 rappor)",
+          "Ilk kursun beni yikamaz",
+          "Sigarayi yakarim kursunu sikarim",
+          "Sigarayi yakarim kursunu sikarim",
+        ],
         skills: [
           { name: "Academics", bonus: 2 },
           { name: "Athletics", bonus: 2 },

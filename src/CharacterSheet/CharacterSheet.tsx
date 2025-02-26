@@ -11,6 +11,8 @@ import {
   Group,
   NumberInput,
   Paper,
+  ScrollArea,
+  SimpleGrid,
   Stack,
   Text,
   TextInput,
@@ -147,11 +149,27 @@ function CharacterSheet() {
               </Card.Section>
             </Card>
             {isNotesView ? (
-              <Card h={600} ref={targetRef} withBorder shadow="sm" radius="md">
-                <CardSection withBorder inheritPadding py="xs">
-                  <Text>Notes</Text>
-                </CardSection>
-              </Card>
+              <>
+                <Card withBorder shadow="sm" radius="md">
+                  <CardSection withBorder inheritPadding py="xs">
+                    <Text>Your Stunts</Text>
+                  </CardSection>
+                  <SimpleGrid mt="sm" cols={{ base: 1, sm: 2, lg: 3 }}>
+                    {currCharacter.stunts.map((s) => (
+                      <Paper radius="md" h={100} p="md" withBorder>
+                        <ScrollArea h={70}>
+                          <Text>{s}</Text>
+                        </ScrollArea>
+                      </Paper>
+                    ))}
+                  </SimpleGrid>
+                </Card>
+                <Card h={350} ref={targetRef} withBorder shadow="sm" radius="md">
+                  <CardSection withBorder inheritPadding py="xs">
+                    <Text>Notes</Text>
+                  </CardSection>
+                </Card>
+              </>
             ) : (
               <>
                 <Card withBorder shadow="sm" radius="md">
@@ -177,8 +195,8 @@ function CharacterSheet() {
                   {isMobile ? (
                     <Group w="100%" justify="center">
                       <Group className="paper-hover" onClick={handleDiceRoll}>
-                        {diceRolls.map((d) => (
-                          <Paper withBorder h={50} w={50} p="sm">
+                        {diceRolls.map((d, index) => (
+                          <Paper key={index} withBorder h={50} w={50} p="sm">
                             <span className={animate ? "dice-icon" : ""}>{d === 1 ? <IconPlus /> : d === -1 ? <IconMinus /> : null}</span>
                           </Paper>
                         ))}
@@ -199,8 +217,8 @@ function CharacterSheet() {
                           className="paper-hover"
                           onClick={handleDiceRoll}
                         >
-                          {diceRolls.map((d) => (
-                            <Paper withBorder h={50} w={50} p="sm">
+                          {diceRolls.map((d, index) => (
+                            <Paper key={index} withBorder h={50} w={50} p="sm">
                               <span className={animate ? "dice-icon" : ""}>{d === 1 ? <IconPlus /> : d === -1 ? <IconMinus /> : null}</span>
                             </Paper>
                           ))}
