@@ -1,6 +1,6 @@
 import { Button, Group, Text, Stack, Menu } from "@mantine/core"
 import { notifications } from "@mantine/notifications"
-import { useCharacterStore } from "../CharacterStore"
+import { useCharacterStore } from "../Stores/CharacterStore"
 import { IconTrash } from "@tabler/icons-react"
 import { modals } from "@mantine/modals"
 

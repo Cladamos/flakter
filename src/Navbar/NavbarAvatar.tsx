@@ -1,9 +1,9 @@
-import { IconChevronDown, IconPencil, IconTrash, IconSwitch2, IconPlus, IconFileArrowRight } from "@tabler/icons-react"
+import { IconChevronDown, IconPencil, IconSwitch2, IconPlus, IconFileArrowRight } from "@tabler/icons-react"
 import { Group, Avatar, Text, Menu, rem } from "@mantine/core"
 import { notifications } from "@mantine/notifications"
 
 import { useCopyToClipboard } from "usehooks-ts"
-import { useCharacterStore } from "../CharacterStore"
+import { useCharacterStore } from "../Stores/CharacterStore"
 import DeleteCharacterModal from "../Modals/DeleteCharacterModal"
 import { modals } from "@mantine/modals"
 import CreateCharacterSelectorModal from "../Modals/CreateCharacterSelectorModal"

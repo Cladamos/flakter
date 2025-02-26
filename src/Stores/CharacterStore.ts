@@ -19,6 +19,7 @@ export type Character = {
   aspects: { highConcept: string; trouble: string; relationship: string; otherAspect: string; secondOtherAspect: string }
   stunts: string[]
   skills: { name: string; bonus: number }[]
+  theme: string
 }
 
 interface CharacterStore {
@@ -83,6 +84,7 @@ export const useCharacterStore = create<CharacterStore>()(
           { name: "Stealth", bonus: 2 },
           { name: "Will", bonus: 2 },
         ],
+        theme: "indigo",
       },
       setCharacters: (characters) => set({ characters }),
       setCurrCharacter: (character) => set({ currCharacter: character }),
@@ -105,6 +107,7 @@ export const useCharacterStore = create<CharacterStore>()(
             aspects: { highConcept: "", trouble: "", relationship: "", otherAspect: "", secondOtherAspect: "" },
             skills: [],
             stunts: [],
+            theme: "",
           }
           return {
             characters: [...state.characters, newCharacter],
