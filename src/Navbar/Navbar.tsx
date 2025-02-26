@@ -29,9 +29,9 @@ function Navbar() {
           <Group h="100%" justify="space-between">
             <Burger opened={opened} onClick={toggle} hiddenFrom="lg" size="sm" w={isMobile ? 100 : 300} />
             <Text size="xl" fw={900} w={{ lg: "400" }}>
-              Clakter
+              Flakter
             </Text>
-            <Group justify="flex-end" w={isMobile ? 100 : 400} gap="xl">
+            <Group justify="flex-end" w={isMobile ? 100 : 300} gap="xl">
               <Paper visibleFrom="lg">
                 <NavbarAvatar size="md" />
               </Paper>

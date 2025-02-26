@@ -7,3 +7,17 @@
   opacity: 0.5;
   cursor: pointer;
 }
+
+@keyframes dice-roll {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(180deg);
+  }
+}
+
+.dice-icon {
+  display: inline-block;
+  animation: dice-roll 0.3s ease-in-out;
+}

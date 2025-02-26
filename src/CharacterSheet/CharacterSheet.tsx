@@ -1,13 +1,34 @@
-import { Button, Card, CardSection, Checkbox, Container, em, Grid, Group, Paper, Stack, Text, TextInput, Title, Tooltip } from "@mantine/core"
-import { IconCircle, IconCircleFilled, IconEdit, IconFile, IconNotebook } from "@tabler/icons-react"
+import {
+  Box,
+  Button,
+  Card,
+  CardSection,
+  Checkbox,
+  Container,
+  Divider,
+  em,
+  Grid,
+  Group,
+  NumberInput,
+  Paper,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+  Tooltip,
+} from "@mantine/core"
+import { IconCircle, IconCircleFilled, IconEdit, IconFile, IconMinus, IconNotebook, IconPlus } from "@tabler/icons-react"
 import { useState } from "react"
 import { useMediaQuery, useScrollIntoView } from "@mantine/hooks"
 import { useCharacterStore } from "../CharacterStore"
 import "./CharacterSheet.css"
+import { RollDice } from "./RollDice"
 
 function CharacterSheet() {
-  const [physicalStress, setPhysicalStress] = useState<boolean[]>([false, false, false, false, false, false])
+  const [physicalStress, setPhysicalStress] = useState<boolean[]>([])
+  const [animate, setAnimate] = useState(false)
   const [isNotesView, setIsNotesView] = useState<boolean>(false)
+  const [diceRolls, setDiceRolls] = useState<number[]>([1, 0, -1, 0])
   const { currCharacter } = useCharacterStore()
 
   const isMobile = useMediaQuery(`(max-width: ${em(1200)})`)
@@ -20,10 +41,10 @@ function CharacterSheet() {
     ]
 
     const consequences = [
-      { text: "Mild", val: currCharacter.consequences.mild },
-      { text: "Moderate", val: currCharacter.consequences.moderate },
-      { text: "Severe", val: currCharacter.consequences.severe },
-      { text: "Mild", val: currCharacter.consequences.secondMild },
+      { text: "Mild", val: currCharacter.consequences.mild, stress: 2 },
+      { text: "Moderate", val: currCharacter.consequences.moderate, stress: 4 },
+      { text: "Severe", val: currCharacter.consequences.severe, stress: 6 },
+      { text: "Mild", val: currCharacter.consequences.secondMild, stress: 2 },
     ]
 
     const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({
@@ -41,6 +62,14 @@ function CharacterSheet() {
           })
         }
       }, 1)
+    }
+
+    function handleDiceRoll() {
+      setDiceRolls(RollDice())
+      setAnimate(true)
+      setTimeout(() => {
+        setAnimate(false)
+      }, 250)
     }
 
     return (
@@ -72,28 +101,22 @@ function CharacterSheet() {
                 </Group>
               </Group>
               <Card.Section withBorder inheritPadding py="sm">
-                <Grid style={{ textAlign: "center" }} grow>
+                <Grid columns={36} style={{ textAlign: "center" }} align="center" grow>
                   {basicValues.map((b, index) =>
                     b.maxVal ? (
-                      <Grid.Col key={b.text} span={{ base: 12, md: 4, lg: 2 }}>
+                      <Grid.Col key={b.text} span={{ base: 36, md: 12, lg: 12 }}>
                         <Text>{b.text}</Text>
                         <Paper py="xs" px="md" withBorder>
                           <Group justify="center">
-                            {Array.from(Array(6)).map((_, index) =>
-                              index + 1 > b.maxVal ? (
-                                <Tooltip key={index} label="Your character don't have that much stress box">
-                                  <Checkbox size="md" radius="xl" icon={IconCircleFilled} disabled />
-                                </Tooltip>
-                              ) : (
-                                <Checkbox
-                                  size="md"
-                                  radius="xl"
-                                  key={index}
-                                  icon={IconCircleFilled}
-                                  onChange={() => setPhysicalStress((v) => v.map((val, i) => (i === index ? !val : val)))}
-                                />
-                              ),
-                            )}
+                            {Array.from(Array(b.maxVal)).map((_, index) => (
+                              <Checkbox
+                                size={b.maxVal > 7 ? (b.maxVal > 10 ? "xs" : "sm") : "md"}
+                                radius="xl"
+                                key={index}
+                                icon={IconCircleFilled}
+                                onChange={() => setPhysicalStress((v) => v.map((val, i) => (i === index ? !val : val)))}
+                              />
+                            ))}
                           </Group>
                         </Paper>
                       </Grid.Col>
@@ -101,14 +124,21 @@ function CharacterSheet() {
                       <Grid.Col
                         pt={isMobile ? (index === 0 || index === 1 ? "xs" : 2) : "xs"}
                         pb={isMobile ? (index === 2 ? "xs" : 2) : "xs"}
-                        span={{ base: 12, md: 4, lg: 2 }}
+                        span={{ base: 36, md: 1, lg: 1 }}
                         key={b.text}
                       >
                         <Text>{b.text}</Text>
-                        <Paper withBorder py="xs">
-                          <Text size="sm" truncate="end">
-                            {b.text}
-                          </Text>
+                        <Paper pl="sm" withBorder>
+                          <NumberInput
+                            styles={{
+                              input: { textAlign: "center" },
+                            }}
+                            value={b.val}
+                            allowNegative={false}
+                            allowDecimal={false}
+                            variant="unstyled"
+                            size="md"
+                          />
                         </Paper>
                       </Grid.Col>
                     ),
@@ -127,17 +157,69 @@ function CharacterSheet() {
                 <Card withBorder shadow="sm" radius="md">
                   <Grid grow style={{ textAlign: "center" }} align="end">
                     {consequences.map((c, index) => (
-                      <Grid.Col span={{ base: 6, md: 6, lg: 2 }} key={c.text + index}>
+                      <Grid.Col span={{ base: 12, md: 2, lg: 2 }} key={c.text + index}>
                         <Text>{c.text}</Text>
-                        <Paper py="4" px={isMobile ? "xs" : "md"} withBorder>
-                          <Group w="100%">
+                        <Paper px="xs" withBorder>
+                          <Group w="100%" gap="xs">
                             <Checkbox w="10%" size="md" radius="xl" icon={IconCircleFilled} />
                             <TextInput w="70%" variant="unstyled" />
+                            <Group justify="end" w="10%" gap="sm" p={0}>
+                              <Divider orientation="vertical" />
+                              <Text>{c.stress}</Text>
+                            </Group>
                           </Group>
                         </Paper>
                       </Grid.Col>
                     ))}
                   </Grid>
+                </Card>
+                <Card style={isMobile ? { textAlign: "center" } : undefined} withBorder shadow="sm" radius="md">
+                  {isMobile ? (
+                    <Group w="100%" justify="center">
+                      <Group className="paper-hover" onClick={handleDiceRoll}>
+                        {diceRolls.map((d) => (
+                          <Paper withBorder h={50} w={50} p="sm">
+                            <span className={animate ? "dice-icon" : ""}>{d === 1 ? <IconPlus /> : d === -1 ? <IconMinus /> : null}</span>
+                          </Paper>
+                        ))}
+                      </Group>
+                      <Text w={isMobile ? "100%" : undefined} style={{ justifySelf: "end" }} size="lg" fw={700}>
+                        Total: {(diceRolls.reduce((acc, val) => acc + val, 0) > 0 ? "+" : "") + diceRolls.reduce((acc, val) => acc + val, 0)}
+                      </Text>
+                    </Group>
+                  ) : (
+                    <Box pos="relative" w="100%">
+                      <Group h={50} w="100%">
+                        <Group
+                          style={{
+                            position: "absolute",
+                            left: "50%",
+                            transform: "translateX(-50%)",
+                          }}
+                          className="paper-hover"
+                          onClick={handleDiceRoll}
+                        >
+                          {diceRolls.map((d) => (
+                            <Paper withBorder h={50} w={50} p="sm">
+                              <span className={animate ? "dice-icon" : ""}>{d === 1 ? <IconPlus /> : d === -1 ? <IconMinus /> : null}</span>
+                            </Paper>
+                          ))}
+                        </Group>
+                        <Text
+                          w={isMobile ? "100%" : undefined}
+                          style={{
+                            position: "absolute",
+                            right: "20%",
+                            textAlign: "center",
+                          }}
+                          size="lg"
+                          fw={700}
+                        >
+                          Total: {(diceRolls.reduce((acc, val) => acc + val, 0) > 0 ? "+" : "") + diceRolls.reduce((acc, val) => acc + val, 0)}
+                        </Text>
+                      </Group>
+                    </Box>
+                  )}
                 </Card>
 
                 <Card withBorder shadow="sm" radius="md">
