@@ -6,11 +6,16 @@ export type Character = {
   id: string
   name: string
   fatePoints: number
-  physicalStress: number
+  physicalStress: boolean[]
   maxPhysicalStress: number
-  mentalStress: number
+  mentalStress: boolean[]
   maxMentalStress: number
-  consequences: { mild: string; moderate: string; severe: string; secondMild: string }
+  consequences: {
+    mild: { text: string; check: boolean }
+    moderate: { text: string; check: boolean }
+    severe: { text: string; check: boolean }
+    secondMild: { text: string; check: boolean }
+  }
   aspects: { highConcept: string; trouble: string; relationship: string; otherAspect: string; secondOtherAspect: string }
   stunts: string[]
   skills: { name: string; bonus: number }[]
@@ -34,11 +39,16 @@ export const useCharacterStore = create<CharacterStore>()(
         id: "asdasd",
         name: "Geoff Jones",
         fatePoints: 3,
-        physicalStress: 3,
+        physicalStress: [false, false, false],
         maxPhysicalStress: 3,
-        mentalStress: 2,
+        mentalStress: [false, false, true, true],
         maxMentalStress: 7,
-        consequences: { mild: "", moderate: "", severe: "", secondMild: "" },
+        consequences: {
+          mild: { text: "", check: false },
+          moderate: { text: "", check: false },
+          severe: { text: "", check: false },
+          secondMild: { text: "", check: false },
+        },
         aspects: { highConcept: "", trouble: "", relationship: "", otherAspect: "", secondOtherAspect: "" },
         stunts: [
           "Bu sehirde herkesin hikayesi var (sorgularken + 2 rapport u sehirde herkesin hikayesi var (sorgularken + 2 rappor u sehirde herkesin hikayesi var (sorgularken + 2 rapporu sehirde herkesin hikayesi var (sorgularken + 2 rapporu sehirde herkesin hikayesi var (sorgularken + 2 rappor)",
@@ -76,11 +86,16 @@ export const useCharacterStore = create<CharacterStore>()(
             id: uuidv4(),
             name,
             fatePoints: 6,
-            physicalStress: 0,
+            physicalStress: [],
             maxPhysicalStress: 0,
-            mentalStress: 0,
+            mentalStress: [],
             maxMentalStress: 0,
-            consequences: { mild: "", moderate: "", severe: "", secondMild: "" },
+            consequences: {
+              mild: { text: "", check: false },
+              moderate: { text: "", check: false },
+              severe: { text: "", check: false },
+              secondMild: { text: "", check: false },
+            },
             aspects: { highConcept: "", trouble: "", relationship: "", otherAspect: "", secondOtherAspect: "" },
             skills: [],
             stunts: [],
