@@ -27,7 +27,7 @@ interface CharacterStore {
   setCharacters: (characters: Character[]) => void
   currCharacter: Character | null
   setCurrCharacter: (character: Character | null) => void
-  addCharacter: (name: string) => void
+  addCharacter: (character: Character) => void
   updateCharacter: (id: string, updates: Partial<Character>) => void
   removeCharacter: (id: string) => void
 }
@@ -88,27 +88,9 @@ export const useCharacterStore = create<CharacterStore>()(
       },
       setCharacters: (characters) => set({ characters }),
       setCurrCharacter: (character) => set({ currCharacter: character }),
-      addCharacter: (name) =>
+      addCharacter: (character) =>
         set((state) => {
-          const newCharacter: Character = {
-            id: uuidv4(),
-            name,
-            fatePoints: 6,
-            physicalStress: [],
-            maxPhysicalStress: 0,
-            mentalStress: [],
-            maxMentalStress: 0,
-            consequences: {
-              mild: { text: "", check: false },
-              moderate: { text: "", check: false },
-              severe: { text: "", check: false },
-              secondMild: { text: "", check: false },
-            },
-            aspects: { highConcept: "", trouble: "", relationship: "", otherAspect: "", secondOtherAspect: "" },
-            skills: [],
-            stunts: [],
-            theme: "",
-          }
+          const newCharacter: Character = { ...character, id: uuidv4() }
           return {
             characters: [...state.characters, newCharacter],
             currCharacter: newCharacter,

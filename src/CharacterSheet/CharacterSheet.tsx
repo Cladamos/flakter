@@ -112,8 +112,8 @@ function CharacterSheet() {
                     typeof b.val !== "number" ? (
                       <Grid.Col key={b.text} span={{ base: 36, md: 12, lg: 12 }}>
                         <Text>{b.text}</Text>
-                        <Paper py="xs" px="md" withBorder>
-                          <Group justify="center">
+                        <Paper h={50} px="md" withBorder>
+                          <Group h="100%" justify="center">
                             {b.val.map((bool, index) => (
                               <Checkbox
                                 size={b.maxVal! > 7 ? (b.maxVal! > 10 ? "xs" : "sm") : "md"}
@@ -146,18 +146,20 @@ function CharacterSheet() {
                         key={b.text}
                       >
                         <Text>{b.text}</Text>
-                        <Paper pl="sm" withBorder>
-                          <NumberInput
-                            styles={{
-                              input: { textAlign: "center" },
-                            }}
-                            value={b.val}
-                            onChange={(e) => updateCharacter(currCharacter.id, { ...currCharacter, fatePoints: Number(e) })}
-                            allowNegative={false}
-                            allowDecimal={false}
-                            variant="unstyled"
-                            size="md"
-                          />
+                        <Paper h={50} pl="sm" withBorder>
+                          <Group h="100%" align="center" justify="center">
+                            <NumberInput
+                              styles={{
+                                input: { textAlign: "center" },
+                              }}
+                              value={b.val}
+                              onChange={(e) => updateCharacter(currCharacter.id, { ...currCharacter, fatePoints: Number(e) })}
+                              allowNegative={false}
+                              allowDecimal={false}
+                              variant="unstyled"
+                              size="md"
+                            />
+                          </Group>
                         </Paper>
                       </Grid.Col>
                     ),
@@ -192,10 +194,10 @@ function CharacterSheet() {
                 <Card withBorder shadow="sm" radius="md">
                   <Grid grow style={{ textAlign: "center" }} align="end">
                     {consequences.map((c, index) => (
-                      <Grid.Col span={{ base: 12, md: 2, lg: 2 }} key={c.text + index}>
+                      <Grid.Col span={{ base: 12, md: 6, lg: 2 }} key={c.text + index}>
                         <Text>{c.text}</Text>
-                        <Paper py="4" px="xs" withBorder>
-                          <Group w="100%" gap="xs">
+                        <Paper h={50} px="xs" withBorder>
+                          <Group h="100%" w="100%" gap="xs">
                             <Checkbox
                               checked={c.val.check}
                               onChange={() =>
@@ -305,7 +307,7 @@ function CharacterSheet() {
                         <Paper onClick={() => handleDiceRoll(s.bonus)} p="xs" withBorder className="paper-hover">
                           <Group>
                             <IconCircle />
-                            <Text size="sm">{s.name + ": " + (s.bonus === 0 ? 0 : "+" + s.bonus)}</Text>
+                            <Text size="sm">{s.name + ": " + (s.bonus === 0 || s.bonus < 0 ? s.bonus : "+" + s.bonus)}</Text>
                           </Group>
                         </Paper>
                       </Grid.Col>
