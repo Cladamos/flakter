@@ -10,7 +10,7 @@ interface ThemeStore {
 
 export const useThemeStore = create(
   persist<ThemeStore>(
-    (set, get) => ({
+    (set) => ({
       themeColor: "indigo",
       theme: createTheme({
         fontFamily: "Poppins, sans-serif",
