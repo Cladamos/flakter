@@ -38,7 +38,6 @@ function CharacterSheet() {
 
   if (currCharacter) {
     const basicValues = [
-      { text: "Fate Points", val: currCharacter.fatePoints },
       { text: "Physical Stress", val: currCharacter.physicalStress, maxVal: currCharacter.maxPhysicalStress },
       { text: "Mental Stress", val: currCharacter.mentalStress, maxVal: currCharacter.maxMentalStress },
     ]
@@ -108,62 +107,67 @@ function CharacterSheet() {
               </Group>
               <Card.Section withBorder inheritPadding py="sm">
                 <Grid columns={36} style={{ textAlign: "center" }} align="center" grow>
-                  {basicValues.map((b, index) =>
-                    typeof b.val !== "number" ? (
-                      <Grid.Col key={b.text} span={{ base: 36, md: 12, lg: 12 }}>
-                        <Text>{b.text}</Text>
-                        <Paper h={50} px="md" withBorder>
-                          <Group h="100%" justify="center">
-                            {b.val.map((bool, index) => (
-                              <Checkbox
-                                size={b.maxVal! > 7 ? (b.maxVal! > 10 ? "xs" : "sm") : "md"}
-                                radius="xl"
-                                color="red"
-                                key={index}
-                                icon={IconCircleFilled}
-                                checked={bool}
-                                onChange={() =>
-                                  b.text === "Physical Stress"
-                                    ? updateCharacter(currCharacter.id, {
-                                        ...currCharacter,
-                                        physicalStress: currCharacter.physicalStress.map((v, i) => (i === index ? !v : v)),
-                                      })
-                                    : updateCharacter(currCharacter.id, {
-                                        ...currCharacter,
-                                        mentalStress: currCharacter.mentalStress.map((v, i) => (i === index ? !v : v)),
-                                      })
-                                }
-                              />
-                            ))}
+                  <Grid.Col span={{ base: 36, md: 12, lg: 8 }}>
+                    <Group grow wrap="nowrap">
+                      <Stack gap={0}>
+                        <Text>Refresh</Text>
+                        <Paper p={0} h={50} withBorder>
+                          <Group h="100%" align="center" justify="center">
+                            <Text>{currCharacter.refresh}</Text>
                           </Group>
                         </Paper>
-                      </Grid.Col>
-                    ) : (
-                      <Grid.Col
-                        pt={isMobile ? (index === 0 || index === 1 ? "xs" : 2) : "xs"}
-                        pb={isMobile ? (index === 2 ? "xs" : 2) : "xs"}
-                        span={{ base: 36, md: 1, lg: 1 }}
-                        key={b.text}
-                      >
-                        <Text>{b.text}</Text>
+                      </Stack>
+                      <Stack gap={0}>
+                        <Text>Fate Points</Text>
                         <Paper h={50} pl="sm" withBorder>
                           <Group h="100%" align="center" justify="center">
                             <NumberInput
                               styles={{
                                 input: { textAlign: "center" },
                               }}
-                              value={b.val}
+                              value={currCharacter.fatePoints}
                               onChange={(e) => updateCharacter(currCharacter.id, { ...currCharacter, fatePoints: Number(e) })}
                               allowNegative={false}
                               allowDecimal={false}
                               variant="unstyled"
                               size="md"
+                              w="100%"
                             />
                           </Group>
                         </Paper>
-                      </Grid.Col>
-                    ),
-                  )}
+                      </Stack>
+                    </Group>
+                  </Grid.Col>
+                  {basicValues.map((b) => (
+                    <Grid.Col key={b.text} span={{ base: 36, md: 12, lg: 12 }}>
+                      <Text>{b.text}</Text>
+                      <Paper h={50} px="md" withBorder>
+                        <Group h="100%" justify="center">
+                          {b.val.map((bool, index) => (
+                            <Checkbox
+                              size={b.maxVal! > 7 ? (b.maxVal! > 10 ? "xs" : "sm") : "md"}
+                              radius="xl"
+                              color="red"
+                              key={index}
+                              icon={IconCircleFilled}
+                              checked={bool}
+                              onChange={() =>
+                                b.text === "Physical Stress"
+                                  ? updateCharacter(currCharacter.id, {
+                                      ...currCharacter,
+                                      physicalStress: currCharacter.physicalStress.map((v, i) => (i === index ? !v : v)),
+                                    })
+                                  : updateCharacter(currCharacter.id, {
+                                      ...currCharacter,
+                                      mentalStress: currCharacter.mentalStress.map((v, i) => (i === index ? !v : v)),
+                                    })
+                              }
+                            />
+                          ))}
+                        </Group>
+                      </Paper>
+                    </Grid.Col>
+                  ))}
                 </Grid>
               </Card.Section>
             </Card>

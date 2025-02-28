@@ -6,6 +6,7 @@ export type Character = {
   id: string
   name: string
   fatePoints: number
+  refresh: number
   physicalStress: boolean[]
   maxPhysicalStress: number
   mentalStress: boolean[]
@@ -40,6 +41,7 @@ export const useCharacterStore = create<CharacterStore>()(
         id: "asdasd",
         name: "Geoff Jones",
         fatePoints: 3,
+        refresh: 3,
         physicalStress: [false, false, false],
         maxPhysicalStress: 3,
         mentalStress: [false, false, true, true],

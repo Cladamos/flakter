@@ -69,6 +69,7 @@ function CreateCharacterModal() {
       id: "",
       name: "",
       fatePoints: 3,
+      refresh: 3,
       physicalStress: [],
       maxPhysicalStress: 0,
       mentalStress: [],
@@ -107,7 +108,7 @@ function CreateCharacterModal() {
     validate: { name: (value) => (value.length === 0 ? "Your character must have a name" : null) },
   })
 
-  form.watch("fatePoints", ({ value }) => {
+  form.watch("refresh", ({ value }) => {
     setCreatableStuntCount(6 - value)
   })
 
@@ -142,6 +143,7 @@ function CreateCharacterModal() {
       maxPhysicalStress: physicalStress,
       mentalStress: Array(mentalStress).fill(false),
       physicalStress: Array(physicalStress).fill(false),
+      fatePoints: c.refresh,
     }
 
     addCharacter(newCharacter)
@@ -226,11 +228,11 @@ function CreateCharacterModal() {
               allowDecimal={false}
               size="md"
               radius="md"
-              label="Fate Points"
-              key={form.key("fatePoints")}
-              {...form.getInputProps("fatePoints")}
+              label="Refresh"
+              key={form.key("refresh")}
+              {...form.getInputProps("refresh")}
             />
-            {isMobile && <Text size="xs">You can create '6 - fate point' amount of stunts</Text>}
+            {isMobile && <Text size="xs">You can create '6 - refresh' amount of stunts</Text>}
             <SimpleGrid mt="sm" cols={{ base: 1, sm: 1, lg: 2 }}>
               {stunts.map((s, index) =>
                 index < creatableStuntCount ? (
@@ -245,7 +247,7 @@ function CreateCharacterModal() {
                   </Paper>
                 ) : (
                   <Paper opacity={0.3} key={index} radius="md" h={120} p="md" withBorder>
-                    <Tooltip label="You can create '6 - fate point' amount of stunts">
+                    <Tooltip label="You can create '6 - refresh' amount of stunts">
                       <Textarea disabled label={s.label} placeholder="Write your stunt" variant="unstyled"></Textarea>
                     </Tooltip>
                   </Paper>
