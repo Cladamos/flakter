@@ -5,7 +5,7 @@ import { useMediaQuery } from "@mantine/hooks"
 import { modals } from "@mantine/modals"
 import CreateCharacterSelectorModal from "../Modals/CreateCharacterSelectorModal"
 import { useCharacterStore } from "../../Stores/CharacterStore"
-import SelectCharacterModal, { handleSelectCharacterError } from "../Modals/SelectCharacterModal"
+import SelectCharacterModal from "../Modals/SelectCharacterModal"
 
 export function HeroText() {
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`)

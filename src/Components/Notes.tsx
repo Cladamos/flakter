@@ -103,9 +103,11 @@ function Notes() {
   const { colorScheme } = useMantineColorScheme()
 
   useEffect(() => {
-    if (currCharacter) {
-      updateCharacter(currCharacter.id, { ...currCharacter, notes: notes })
-    }
+    setNotes(currCharacter!.notes)
+  }, currCharacter!.notes)
+
+  useEffect(() => {
+    updateCharacter(currCharacter!.id, { ...currCharacter, notes: notes })
   }, [notes])
 
   const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView<HTMLDivElement, HTMLDivElement>()
