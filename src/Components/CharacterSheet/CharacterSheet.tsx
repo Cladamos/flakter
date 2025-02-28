@@ -21,7 +21,7 @@ import {
 import { IconCircle, IconCircleFilled, IconEdit, IconFile, IconMinus, IconNotebook, IconPlus } from "@tabler/icons-react"
 import { useRef, useState } from "react"
 import { useMediaQuery, useScrollIntoView } from "@mantine/hooks"
-import { useCharacterStore } from "../Stores/CharacterStore"
+import { useCharacterStore } from "../../Stores/CharacterStore"
 import "./CharacterSheet.css"
 import { RollDice } from "./RollDice"
 import CharacterDetailsModal from "../Modals/CharacterDetailsModal"

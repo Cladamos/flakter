@@ -1,5 +1,5 @@
 import { Paper, Stack, Text, Title } from "@mantine/core"
-import { useCharacterStore } from "../Stores/CharacterStore"
+import { useCharacterStore } from "../../Stores/CharacterStore"
 import "../CharacterSheet/CharacterSheet.css"
 import { modals } from "@mantine/modals"
 

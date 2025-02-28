@@ -2,8 +2,8 @@ import { Button, Stack, JsonInput } from "@mantine/core"
 import { useInputState } from "@mantine/hooks"
 import { notifications } from "@mantine/notifications"
 import { useEffect, useState } from "react"
-import { Character, useCharacterStore } from "../Stores/CharacterStore"
-import { useThemeStore } from "../Stores/ThemeStore"
+import { Character, useCharacterStore } from "../../Stores/CharacterStore"
+import { useThemeStore } from "../../Stores/ThemeStore"
 import { modals } from "@mantine/modals"
 
 function ImportCharacterModal() {

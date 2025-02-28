@@ -2,13 +2,13 @@ import "@mantine/core/styles.css"
 import "@mantine/notifications/styles.css"
 
 import { MantineProvider } from "@mantine/core"
-import { HeroText } from "./HeroHeader/HeroText"
-import CharacterSheet from "./CharacterSheet/CharacterSheet"
-import Navbar from "./Navbar/Navbar"
+import { HeroText } from "./Components/HeroHeader/HeroText"
+import CharacterSheet from "./Components/CharacterSheet/CharacterSheet"
 import { Notifications } from "@mantine/notifications"
 import { ModalsProvider } from "@mantine/modals"
 import { useCharacterStore } from "./Stores/CharacterStore"
 import { useThemeStore } from "./Stores/ThemeStore"
+import Navbar from "./Components/Navbar/Navbar"
 
 function App() {
   const { currCharacter } = useCharacterStore()

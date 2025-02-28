@@ -3,10 +3,10 @@ import { Group, Avatar, Text, Menu, rem } from "@mantine/core"
 import { notifications } from "@mantine/notifications"
 
 import { useCopyToClipboard } from "usehooks-ts"
-import { useCharacterStore } from "../Stores/CharacterStore"
-import DeleteCharacterModal from "../Modals/DeleteCharacterModal"
+import { useCharacterStore } from "../../Stores/CharacterStore"
+import DeleteCharacterModal from "../../Components/Modals/DeleteCharacterModal"
 import { modals } from "@mantine/modals"
-import CreateCharacterSelectorModal from "../Modals/CreateCharacterSelectorModal"
+import CreateCharacterSelectorModal from "../../Components/Modals/CreateCharacterSelectorModal"
 
 type NavbarAvatarProps = {
   size: string

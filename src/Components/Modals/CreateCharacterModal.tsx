@@ -1,5 +1,5 @@
 import { useForm } from "@mantine/form"
-import { Character, useCharacterStore } from "../Stores/CharacterStore"
+import { Character, useCharacterStore } from "../../Stores/CharacterStore"
 import {
   Button,
   Group,
@@ -22,7 +22,7 @@ import {
   Checkbox,
 } from "@mantine/core"
 import { useState } from "react"
-import { useThemeStore } from "../Stores/ThemeStore"
+import { useThemeStore } from "../../Stores/ThemeStore"
 import { useMediaQuery } from "@mantine/hooks"
 import { IconCircleFilled, IconInfoCircle } from "@tabler/icons-react"
 import { modals } from "@mantine/modals"
