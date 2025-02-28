@@ -104,6 +104,7 @@ function CreateCharacterModal() {
       ],
       stunts: [],
       theme: "indigo",
+      notes: [],
     },
     validate: { name: (value) => (value.length === 0 ? "Your character must have a name" : null) },
   })

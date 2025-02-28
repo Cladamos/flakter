@@ -1,6 +1,7 @@
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
 import { v4 as uuidv4 } from "uuid"
+import { Note } from "../Components/Notes"
 
 export type Character = {
   id: string
@@ -21,6 +22,7 @@ export type Character = {
   stunts: string[]
   skills: { name: string; bonus: number }[]
   theme: string
+  notes: Note[]
 }
 
 interface CharacterStore {
@@ -87,6 +89,7 @@ export const useCharacterStore = create<CharacterStore>()(
           { name: "Will", bonus: 2 },
         ],
         theme: "indigo",
+        notes: [],
       },
       setCharacters: (characters) => set({ characters }),
       setCurrCharacter: (character) => set({ currCharacter: character }),

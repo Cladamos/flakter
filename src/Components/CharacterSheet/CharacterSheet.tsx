@@ -25,6 +25,7 @@ import { useCharacterStore } from "../../Stores/CharacterStore"
 import "./CharacterSheet.css"
 import { RollDice } from "./RollDice"
 import CharacterDetailsModal from "../Modals/CharacterDetailsModal"
+import Notes from "../Notes"
 
 function CharacterSheet() {
   const [animate, setAnimate] = useState(false)
@@ -189,10 +190,11 @@ function CharacterSheet() {
                     ))}
                   </SimpleGrid>
                 </Card>
-                <Card h={350} ref={targetRef} withBorder shadow="sm" radius="md">
+                <Card h={isMobile ? 1150 : 350} ref={targetRef} withBorder shadow="sm" radius="md">
                   <CardSection withBorder inheritPadding py="xs">
                     <Text>Notes</Text>
                   </CardSection>
+                  <Notes />
                 </Card>
               </>
             ) : (
