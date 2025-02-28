@@ -7,7 +7,9 @@ import { useCharacterStore } from "../../Stores/CharacterStore"
 import DeleteCharacterModal from "../../Components/Modals/DeleteCharacterModal"
 import { modals } from "@mantine/modals"
 import CreateCharacterSelectorModal from "../../Components/Modals/CreateCharacterSelectorModal"
-import SelectCharacterModal from "../Modals/SelectCharacterModal"
+import SelectCharacterModal, { handleSelectCharacterError } from "../Modals/SelectCharacterModal"
+import CreateCharacterModal from "../Modals/CreateCharacterModal"
+import { useThemeStore } from "../../Stores/ThemeStore"
 
 type NavbarAvatarProps = {
   size: string
@@ -16,14 +18,7 @@ type NavbarAvatarProps = {
 function NavbarAvatar(props: NavbarAvatarProps) {
   const [_, copy] = useCopyToClipboard()
   const { currCharacter, characters } = useCharacterStore()
-
-  function handleSelectCharacterError() {
-    notifications.show({
-      title: "You have only one character",
-      message: "You can create new characters with using menu",
-      color: "red",
-    })
-  }
+  const { setThemeColor } = useThemeStore()
 
   function handleExportCharacter() {
     copy(JSON.stringify(currCharacter)).then(() =>
@@ -51,7 +46,24 @@ function NavbarAvatar(props: NavbarAvatarProps) {
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Label>Actions</Menu.Label>
-            <Menu.Item leftSection={<IconPencil style={{ width: rem(14), height: rem(14) }} />}>Edit my character</Menu.Item>
+            <Menu.Item
+              leftSection={<IconPencil style={{ width: rem(14), height: rem(14) }} />}
+              onClick={() => {
+                modals.open({
+                  title: "Create Your Own Character",
+                  size: "xl",
+                  padding: "lg",
+                  radius: "md",
+                  centered: true,
+                  onClose() {
+                    setThemeColor(currCharacter ? currCharacter.theme : "indigo")
+                  },
+                  children: <CreateCharacterModal type="editing" />,
+                })
+              }}
+            >
+              Edit my character
+            </Menu.Item>
             <Menu.Item
               leftSection={<IconSwitch2 style={{ width: rem(14), height: rem(14) }} />}
               onClick={() => {

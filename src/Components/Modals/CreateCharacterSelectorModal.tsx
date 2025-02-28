@@ -19,7 +19,7 @@ function CreateCharacterSelectorModal() {
       onClose() {
         setThemeColor(currCharacter ? currCharacter.theme : "indigo")
       },
-      children: <CreateCharacterModal />,
+      children: <CreateCharacterModal type="creating" />,
     })
   }
   function handleImportCharacter() {

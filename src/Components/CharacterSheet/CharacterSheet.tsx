@@ -19,13 +19,14 @@ import {
   Tooltip,
 } from "@mantine/core"
 import { IconCircle, IconCircleFilled, IconEdit, IconFile, IconMinus, IconNotebook, IconPlus } from "@tabler/icons-react"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useMediaQuery, useScrollIntoView } from "@mantine/hooks"
 import { useCharacterStore } from "../../Stores/CharacterStore"
 import "./CharacterSheet.css"
 import { RollDice } from "./RollDice"
 import CharacterDetailsModal from "../Modals/CharacterDetailsModal"
 import Notes from "../Notes"
+import { useThemeStore } from "../../Stores/ThemeStore"
 
 function CharacterSheet() {
   const [animate, setAnimate] = useState(false)
@@ -34,6 +35,7 @@ function CharacterSheet() {
   const diceRollSum = diceRolls.reduce((acc, val) => acc + val, 0)
   const [modifier, setModifier] = useState<number>(0)
   const { currCharacter, updateCharacter } = useCharacterStore()
+  const { setThemeColor } = useThemeStore()
 
   const isMobile = useMediaQuery(`(max-width: ${em(1200)})`)
 
@@ -61,6 +63,10 @@ function CharacterSheet() {
       offset: 60,
       duration: 750,
     })
+
+    useEffect(() => {
+      setThemeColor(currCharacter.theme)
+    }, [currCharacter])
 
     function handleNotesView() {
       setIsNotesView((n) => !n)

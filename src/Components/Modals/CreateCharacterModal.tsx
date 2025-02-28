@@ -21,7 +21,7 @@ import {
   Container,
   Checkbox,
 } from "@mantine/core"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useThemeStore } from "../../Stores/ThemeStore"
 import { useMediaQuery } from "@mantine/hooks"
 import { IconCircleFilled, IconInfoCircle } from "@tabler/icons-react"
@@ -52,16 +52,20 @@ const stressBoxes = [
 
 const colors = ["gray", "red", "pink", "grape", "violet", "indigo", "blue", "cyan", "teal", "green", "lime", "yellow", "orange"] // Comes here https://yeun.github.io/open-color/
 
-function CreateCharacterModal() {
+type createCharacterModalProps = {
+  type: "editing" | "creating"
+}
+
+function CreateCharacterModal(props: createCharacterModalProps) {
   const [active, setActive] = useState(0)
   const [creatableStuntCount, setCreatableStuntCount] = useState<number>(3)
-  const [isCustomStress, setIsCustomStress] = useState<boolean[]>([false, false])
+  const [isCustomStress, setIsCustomStress] = useState<boolean[]>(props.type === "creating" ? [false, false] : [true, true])
   const nextStep = () => setActive((current) => (current < 4 ? current + 1 : current))
   const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current))
 
   const isMobile = useMediaQuery(`(max-width: ${em(1200)})`)
   const { themeColor, setThemeColor } = useThemeStore()
-  const { addCharacter } = useCharacterStore()
+  const { currCharacter, addCharacter, updateCharacter } = useCharacterStore()
 
   const form = useForm<Character>({
     mode: "uncontrolled",
@@ -113,42 +117,67 @@ function CreateCharacterModal() {
     setCreatableStuntCount(6 - value)
   })
 
-  function handleSubmit(c: Character) {
-    let newCharacter = c
-    let physicalStress = c.maxPhysicalStress
-    let mentalStress = c.maxMentalStress
+  const initialLoad = useRef(true)
+  useEffect(() => {
+    if (initialLoad.current) {
+      if (props.type === "editing") {
+        form.setValues(currCharacter!)
+      }
+      if (props.type === "creating") {
+        form.reset()
+      }
+      initialLoad.current = false
+    }
+  }, [props.type, currCharacter, form])
 
-    if (c.maxPhysicalStress === 0) {
-      physicalStress = 3
-      console.log(c.skills[12]) // skills[12] = physique
-      if (c.skills[12].bonus > 0) {
-        physicalStress = 4
+  function handleSubmit(c: Character) {
+    if (props.type === "creating") {
+      let newCharacter = c
+      let physicalStress = c.maxPhysicalStress
+      let mentalStress = c.maxMentalStress
+
+      if (c.maxPhysicalStress === 0) {
+        physicalStress = 3
+        console.log(c.skills[12]) // skills[12] = physique
+        if (c.skills[12].bonus > 0) {
+          physicalStress = 4
+        }
+        if (c.skills[12].bonus > 2) {
+          physicalStress = 6
+        }
       }
-      if (c.skills[12].bonus > 2) {
-        physicalStress = 6
+      if (c.maxMentalStress === 0) {
+        mentalStress = 3
+        console.log(c.skills[18]) // skills[18] = will
+        if (c.skills[18].bonus > 0) {
+          mentalStress = 4
+        }
+        if (c.skills[18].bonus > 2) {
+          mentalStress = 6
+        }
       }
+      newCharacter = {
+        ...c,
+        maxMentalStress: mentalStress,
+        maxPhysicalStress: physicalStress,
+        mentalStress: Array(mentalStress).fill(false),
+        physicalStress: Array(physicalStress).fill(false),
+        fatePoints: c.refresh,
+      }
+      setThemeColor(c.theme)
+      addCharacter(newCharacter)
+      modals.closeAll()
     }
-    if (c.maxMentalStress === 0) {
-      mentalStress = 3
-      console.log(c.skills[18]) // skills[18] = will
-      if (c.skills[18].bonus > 0) {
-        mentalStress = 4
-      }
-      if (c.skills[18].bonus > 2) {
-        mentalStress = 6
-      }
+    if (props.type === "editing") {
+      updateCharacter(currCharacter!.id, {
+        ...c,
+        mentalStress: Array(c.maxMentalStress).fill(false),
+        physicalStress: Array(c.maxPhysicalStress).fill(false),
+        stunts: c.stunts.filter((_, index) => (6 - c.refresh > index ? c : "")),
+      })
+      setThemeColor(c.theme)
+      modals.closeAll()
     }
-    newCharacter = {
-      ...c,
-      maxMentalStress: mentalStress,
-      maxPhysicalStress: physicalStress,
-      mentalStress: Array(mentalStress).fill(false),
-      physicalStress: Array(physicalStress).fill(false),
-      fatePoints: c.refresh,
-    }
-    setThemeColor(c.theme)
-    addCharacter(newCharacter)
-    modals.closeAll()
   }
 
   function handleError() {
