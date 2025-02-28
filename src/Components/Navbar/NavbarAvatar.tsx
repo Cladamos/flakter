@@ -7,6 +7,7 @@ import { useCharacterStore } from "../../Stores/CharacterStore"
 import DeleteCharacterModal from "../../Components/Modals/DeleteCharacterModal"
 import { modals } from "@mantine/modals"
 import CreateCharacterSelectorModal from "../../Components/Modals/CreateCharacterSelectorModal"
+import SelectCharacterModal from "../Modals/SelectCharacterModal"
 
 type NavbarAvatarProps = {
   size: string
@@ -14,7 +15,7 @@ type NavbarAvatarProps = {
 
 function NavbarAvatar(props: NavbarAvatarProps) {
   const [_, copy] = useCopyToClipboard()
-  const { currCharacter } = useCharacterStore()
+  const { currCharacter, characters } = useCharacterStore()
 
   function handleSelectCharacterError() {
     notifications.show({
@@ -51,7 +52,25 @@ function NavbarAvatar(props: NavbarAvatarProps) {
           <Menu.Dropdown>
             <Menu.Label>Actions</Menu.Label>
             <Menu.Item leftSection={<IconPencil style={{ width: rem(14), height: rem(14) }} />}>Edit my character</Menu.Item>
-            <Menu.Item leftSection={<IconSwitch2 style={{ width: rem(14), height: rem(14) }} />}>Change character</Menu.Item>
+            <Menu.Item
+              leftSection={<IconSwitch2 style={{ width: rem(14), height: rem(14) }} />}
+              onClick={() => {
+                if (characters.length === 1) {
+                  handleSelectCharacterError()
+                } else {
+                  modals.open({
+                    title: "Select your character",
+                    size: "sm",
+                    padding: "md",
+                    radius: "md",
+                    centered: true,
+                    children: <SelectCharacterModal />,
+                  })
+                }
+              }}
+            >
+              Change character
+            </Menu.Item>
             <Menu.Item
               onClick={() =>
                 modals.open({

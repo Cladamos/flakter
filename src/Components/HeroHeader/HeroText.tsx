@@ -4,9 +4,12 @@ import classes from "./HeroText.module.css"
 import { useMediaQuery } from "@mantine/hooks"
 import { modals } from "@mantine/modals"
 import CreateCharacterSelectorModal from "../Modals/CreateCharacterSelectorModal"
+import { useCharacterStore } from "../../Stores/CharacterStore"
+import SelectCharacterModal, { handleSelectCharacterError } from "../Modals/SelectCharacterModal"
 
 export function HeroText() {
   const isMobile = useMediaQuery(`(max-width: ${em(750)})`)
+  const { characters } = useCharacterStore()
   return (
     <>
       <Container className={classes.wrapper} size={1400} mt={isMobile ? 150 : 300}>
@@ -30,22 +33,31 @@ export function HeroText() {
           </Container>
 
           <div className={classes.controls}>
-            {/* {characterCtx.characters.length === 0 ? (
+            {characters.length === 0 ? (
               <Tooltip label="You don't have any characters">
                 <Button className={classes.control} size="lg" disabled>
                   Select Character
                 </Button>
               </Tooltip>
             ) : (
-              <Button className={classes.control} size="lg" onClick={open} variant="outline">
+              <Button
+                className={classes.control}
+                size="lg"
+                variant="outline"
+                onClick={() =>
+                  modals.open({
+                    title: "Select your character",
+                    size: "sm",
+                    padding: "md",
+                    radius: "md",
+                    centered: true,
+                    children: <SelectCharacterModal />,
+                  })
+                }
+              >
                 Select Character
               </Button>
-            )} */}
-            <Tooltip label="You don't have any characters">
-              <Button className={classes.control} size="lg" disabled>
-                Select Character
-              </Button>
-            </Tooltip>
+            )}
             <Button
               onClick={() =>
                 modals.open({

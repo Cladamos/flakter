@@ -2,8 +2,12 @@ import { Button, Stack } from "@mantine/core"
 import { modals } from "@mantine/modals"
 import CreateCharacterModal from "./CreateCharacterModal"
 import ImportCharacterModal from "./ImportCharacterModal"
+import { useCharacterStore } from "../../Stores/CharacterStore"
+import { useThemeStore } from "../../Stores/ThemeStore"
 
 function CreateCharacterSelectorModal() {
+  const { currCharacter } = useCharacterStore()
+  const { setThemeColor } = useThemeStore()
   function handleCreateCharacter() {
     modals.closeAll()
     modals.open({
@@ -12,6 +16,9 @@ function CreateCharacterSelectorModal() {
       padding: "lg",
       radius: "md",
       centered: true,
+      onClose() {
+        setThemeColor(currCharacter ? currCharacter.theme : "indigo")
+      },
       children: <CreateCharacterModal />,
     })
   }

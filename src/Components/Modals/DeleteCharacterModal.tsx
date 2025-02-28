@@ -3,12 +3,15 @@ import { notifications } from "@mantine/notifications"
 import { useCharacterStore } from "../../Stores/CharacterStore"
 import { IconTrash } from "@tabler/icons-react"
 import { modals } from "@mantine/modals"
+import { useThemeStore } from "../../Stores/ThemeStore"
 
 function DeleteCharacterModal() {
   const { currCharacter, removeCharacter } = useCharacterStore()
+  const { setThemeColor } = useThemeStore()
 
   function handleDelete() {
     removeCharacter(currCharacter!.id)
+    setThemeColor("indigo")
     modals.closeAll()
     notifications.show({
       title: "Your character succesfuly deleted",

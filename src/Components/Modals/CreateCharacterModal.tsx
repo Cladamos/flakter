@@ -146,7 +146,7 @@ function CreateCharacterModal() {
       physicalStress: Array(physicalStress).fill(false),
       fatePoints: c.refresh,
     }
-
+    setThemeColor(c.theme)
     addCharacter(newCharacter)
     modals.closeAll()
   }
