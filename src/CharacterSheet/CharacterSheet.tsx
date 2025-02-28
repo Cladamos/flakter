@@ -19,7 +19,7 @@ import {
   Tooltip,
 } from "@mantine/core"
 import { IconCircle, IconCircleFilled, IconEdit, IconFile, IconMinus, IconNotebook, IconPlus } from "@tabler/icons-react"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { useMediaQuery, useScrollIntoView } from "@mantine/hooks"
 import { useCharacterStore } from "../Stores/CharacterStore"
 import "./CharacterSheet.css"
@@ -35,6 +35,8 @@ function CharacterSheet() {
   const { currCharacter, updateCharacter } = useCharacterStore()
 
   const isMobile = useMediaQuery(`(max-width: ${em(1200)})`)
+
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([])
 
   if (currCharacter) {
     const basicValues = [
@@ -204,18 +206,24 @@ function CharacterSheet() {
                           <Group h="100%" w="100%" gap="xs">
                             <Checkbox
                               checked={c.val.check}
-                              onChange={() =>
+                              onChange={(e) => {
                                 updateCharacter(currCharacter.id, {
                                   ...currCharacter,
                                   consequences: { ...currCharacter.consequences, [c.location]: { check: !c.val.check, text: "" } },
                                 })
-                              }
+                                if (e.currentTarget.checked) {
+                                  inputRefs.current[index]?.focus()
+                                }
+                              }}
                               w="10%"
                               size="md"
                               radius="xl"
                               icon={IconCircleFilled}
                             />
                             <TextInput
+                              ref={(element) => {
+                                inputRefs.current[index] = element
+                              }}
                               value={c.val.text}
                               onChange={(e) =>
                                 updateCharacter(currCharacter.id, {
