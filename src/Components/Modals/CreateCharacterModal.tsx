@@ -131,53 +131,54 @@ function CreateCharacterModal(props: createCharacterModalProps) {
   }, [props.type, currCharacter, form])
 
   function handleSubmit(c: Character) {
+    const newCharacter = calculateStressBoxes(c)
     if (props.type === "creating") {
-      let newCharacter = c
-      let physicalStress = c.maxPhysicalStress
-      let mentalStress = c.maxMentalStress
-
-      if (c.maxPhysicalStress === 0) {
-        physicalStress = 3
-        console.log(c.skills[12]) // skills[12] = physique
-        if (c.skills[12].bonus > 0) {
-          physicalStress = 4
-        }
-        if (c.skills[12].bonus > 2) {
-          physicalStress = 6
-        }
-      }
-      if (c.maxMentalStress === 0) {
-        mentalStress = 3
-        console.log(c.skills[18]) // skills[18] = will
-        if (c.skills[18].bonus > 0) {
-          mentalStress = 4
-        }
-        if (c.skills[18].bonus > 2) {
-          mentalStress = 6
-        }
-      }
-      newCharacter = {
-        ...c,
-        maxMentalStress: mentalStress,
-        maxPhysicalStress: physicalStress,
-        mentalStress: Array(mentalStress).fill(false),
-        physicalStress: Array(physicalStress).fill(false),
-        fatePoints: c.refresh,
-      }
-      setThemeColor(c.theme)
       addCharacter(newCharacter)
-      modals.closeAll()
     }
     if (props.type === "editing") {
       updateCharacter(currCharacter!.id, {
-        ...c,
-        mentalStress: Array(c.maxMentalStress).fill(false),
-        physicalStress: Array(c.maxPhysicalStress).fill(false),
-        stunts: c.stunts.filter((_, index) => (6 - c.refresh > index ? c : "")),
+        ...newCharacter,
+        stunts: newCharacter.stunts.filter((_, index) => (6 - newCharacter.refresh > index ? newCharacter : "")),
       })
-      setThemeColor(c.theme)
-      modals.closeAll()
     }
+    setThemeColor(newCharacter.theme)
+    modals.closeAll()
+  }
+
+  function calculateStressBoxes(c: Character): Character {
+    let newCharacter = c
+    let physicalStress = c.maxPhysicalStress
+    let mentalStress = c.maxMentalStress
+
+    if (!isCustomStress[0]) {
+      physicalStress = 3
+      console.log(c.skills[12]) // skills[12] = physique
+      if (c.skills[12].bonus > 0) {
+        physicalStress = 4
+      }
+      if (c.skills[12].bonus > 2) {
+        physicalStress = 6
+      }
+    }
+    if (!isCustomStress[1]) {
+      mentalStress = 3
+      console.log(c.skills[18]) // skills[18] = will
+      if (c.skills[18].bonus > 0) {
+        mentalStress = 4
+      }
+      if (c.skills[18].bonus > 2) {
+        mentalStress = 6
+      }
+    }
+    newCharacter = {
+      ...c,
+      maxMentalStress: mentalStress,
+      maxPhysicalStress: physicalStress,
+      mentalStress: Array(mentalStress).fill(false),
+      physicalStress: Array(physicalStress).fill(false),
+      fatePoints: props.type === "creating" ? c.refresh : c.fatePoints,
+    }
+    return newCharacter
   }
 
   function handleError() {

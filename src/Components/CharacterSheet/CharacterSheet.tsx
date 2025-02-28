@@ -27,6 +27,8 @@ import { RollDice } from "./RollDice"
 import CharacterDetailsModal from "../Modals/CharacterDetailsModal"
 import Notes from "../Notes"
 import { useThemeStore } from "../../Stores/ThemeStore"
+import CreateCharacterModal from "../Modals/CreateCharacterModal"
+import { modals } from "@mantine/modals"
 
 function CharacterSheet() {
   const [animate, setAnimate] = useState(false)
@@ -108,7 +110,24 @@ function CharacterSheet() {
                     </Button>
                   </Tooltip>
                   <Tooltip label="Edit">
-                    <Button px="xs" size="xs" variant="transparent">
+                    <Button
+                      px="xs"
+                      size="xs"
+                      variant="transparent"
+                      onClick={() => {
+                        modals.open({
+                          title: "Create Your Own Character",
+                          size: "xl",
+                          padding: "lg",
+                          radius: "md",
+                          centered: true,
+                          onClose() {
+                            setThemeColor(currCharacter ? currCharacter.theme : "indigo")
+                          },
+                          children: <CreateCharacterModal type="editing" />,
+                        })
+                      }}
+                    >
                       <IconEdit />
                     </Button>
                   </Tooltip>
