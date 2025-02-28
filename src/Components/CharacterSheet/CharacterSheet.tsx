@@ -293,7 +293,7 @@ function CharacterSheet() {
                           ? diceRollSum > 0
                             ? "+" + diceRollSum
                             : "" + diceRollSum
-                          : diceRollSum + " + " + modifier + " = " + (diceRollSum + modifier)}
+                          : diceRollSum + (modifier > 0 ? "+" : "") + modifier + " = " + (diceRollSum + modifier)}
                       </Text>
                     </Group>
                   ) : (
@@ -329,7 +329,7 @@ function CharacterSheet() {
                             ? diceRollSum > 0
                               ? "+" + diceRollSum
                               : "" + diceRollSum
-                            : diceRollSum + " + " + modifier + " = " + (diceRollSum + modifier)}
+                            : diceRollSum + (modifier > 0 ? "+" : "") + modifier + " = " + (diceRollSum + modifier)}
                         </Text>
                       </Group>
                     </Box>
