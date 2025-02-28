@@ -19,8 +19,11 @@
     "@mantine/modals": "^7.17.0",
     "@mantine/notifications": "^7.17.0",
     "@tabler/icons-react": "^3.30.0",
+    "i18next": "^24.2.2",
+    "i18next-http-backend": "^3.0.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-i18next": "^15.4.1",
     "usehooks-ts": "^3.1.1",
     "uuid": "^11.1.0",
     "zustand": "^5.0.3"

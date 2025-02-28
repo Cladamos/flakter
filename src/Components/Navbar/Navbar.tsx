@@ -1,12 +1,15 @@
-import { AppShell, Burger, Group, Text, useMantineColorScheme, Button, Container, Paper, em } from "@mantine/core"
+import { AppShell, Burger, Group, Text, useMantineColorScheme, Button, Container, Paper, em, Stack, Popover } from "@mantine/core"
 import { useDisclosure, useMediaQuery } from "@mantine/hooks"
-import { IconSun, IconMoon } from "@tabler/icons-react"
+import { IconSun, IconMoon, IconLanguage } from "@tabler/icons-react"
 import NavbarAvatar from "./NavbarAvatar"
+import { useTranslation } from "react-i18next"
+import { useState } from "react"
 
 function Navbar() {
   const [opened, { toggle }] = useDisclosure()
-
+  const [openedPopover, setOpenedPopover] = useState<boolean>(false)
   const { colorScheme, setColorScheme } = useMantineColorScheme()
+  const { i18n } = useTranslation()
 
   const toggleColorScheme = () => {
     setColorScheme(colorScheme === "dark" ? "light" : "dark")
@@ -35,17 +38,80 @@ function Navbar() {
               <Paper visibleFrom="lg">
                 <NavbarAvatar size="md" />
               </Paper>
-              <Button onClick={toggleColorScheme} px={6} radius={8}>
-                {colorScheme === "dark" ? <IconSun /> : <IconMoon />}
-              </Button>
+              <Group>
+                {!isMobile && (
+                  <Popover opened={openedPopover} onDismiss={() => setOpenedPopover(false)}>
+                    <Popover.Target>
+                      <Button px={6} radius={8} variant="outline" onClick={() => setOpenedPopover((o) => !o)}>
+                        <IconLanguage />
+                      </Button>
+                    </Popover.Target>
+                    <Popover.Dropdown p="xs">
+                      <Stack gap="xs">
+                        <Button
+                          variant="light"
+                          onClick={() => {
+                            i18n.changeLanguage("tr"), setOpenedPopover(false)
+                          }}
+                        >
+                          Turkish
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            i18n.changeLanguage("en"), setOpenedPopover(false)
+                          }}
+                        >
+                          English
+                        </Button>
+                      </Stack>
+                    </Popover.Dropdown>
+                  </Popover>
+                )}
+                <Button onClick={toggleColorScheme} px={6} radius={8}>
+                  {colorScheme === "dark" ? <IconSun /> : <IconMoon />}
+                </Button>
+              </Group>
             </Group>
           </Group>
         </Container>
       </AppShell.Header>
       <AppShell.Navbar py="md" px="sm">
-        <Paper m="lg">
-          <NavbarAvatar size="md" />
-        </Paper>
+        <Stack gap={0} justify="space-between">
+          <Paper m="lg">
+            <NavbarAvatar size="md" />
+          </Paper>
+          {isMobile && (
+            <Popover opened={openedPopover} onDismiss={() => setOpenedPopover(false)} offset={10} withArrow arrowSize={12}>
+              <Popover.Target>
+                <Button m="lg" px={6} radius={8} variant="outline" onClick={() => setOpenedPopover((o) => !o)}>
+                  <Group gap="xs">
+                    <IconLanguage />
+                    <Text>Language</Text>
+                  </Group>
+                </Button>
+              </Popover.Target>
+              <Popover.Dropdown w="85%" p="xs">
+                <Stack gap="xs">
+                  <Button
+                    variant="light"
+                    onClick={() => {
+                      i18n.changeLanguage("tr"), setOpenedPopover(false)
+                    }}
+                  >
+                    Turkish
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      i18n.changeLanguage("en"), setOpenedPopover(false)
+                    }}
+                  >
+                    English
+                  </Button>
+                </Stack>
+              </Popover.Dropdown>
+            </Popover>
+          )}
+        </Stack>
       </AppShell.Navbar>
     </AppShell>
   )

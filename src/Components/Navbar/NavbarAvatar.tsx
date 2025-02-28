@@ -38,7 +38,7 @@ function NavbarAvatar(props: NavbarAvatarProps) {
               <Avatar size={props.size} alt={currCharacter.name} color="var(--mantine-color-anchor)">
                 {currCharacter.name.slice(0, 2).toUpperCase()}
               </Avatar>
-              <Text truncate="end" maw={100} size={props.size}>
+              <Text truncate="end" maw={80} size={props.size}>
                 {currCharacter.name}
               </Text>
               <IconChevronDown style={{ width: rem(18), height: rem(18) }} />

@@ -29,6 +29,7 @@ import Notes from "../Notes"
 import { useThemeStore } from "../../Stores/ThemeStore"
 import CreateCharacterModal from "../Modals/CreateCharacterModal"
 import { modals } from "@mantine/modals"
+import { useTranslation } from "react-i18next"
 
 function CharacterSheet() {
   const [animate, setAnimate] = useState(false)
@@ -38,6 +39,7 @@ function CharacterSheet() {
   const [modifier, setModifier] = useState<number>(0)
   const { currCharacter, updateCharacter } = useCharacterStore()
   const { setThemeColor } = useThemeStore()
+  const { t } = useTranslation()
 
   const isMobile = useMediaQuery(`(max-width: ${em(1200)})`)
 
@@ -146,7 +148,7 @@ function CharacterSheet() {
                         </Paper>
                       </Stack>
                       <Stack gap={0}>
-                        <Text>Fate Points</Text>
+                        <Text>{t("character-sheet.fate-points")}</Text>
                         <Paper h={50} pl="sm" withBorder>
                           <Group h="100%" align="center" justify="center">
                             <NumberInput
