@@ -1,4 +1,9 @@
 {
+  "navbar": {
+    "language": "Dil",
+    "turkish": "Türkçe",
+    "english": "İngilizce"
+  },
   "character-sheet": {
     "fate-points": "Fate Puanları",
     "edit": "Düzenle",

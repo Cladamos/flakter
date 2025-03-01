@@ -1,4 +1,9 @@
 {
+  "navbar": {
+    "language": "Language",
+    "turkish": "Turkish",
+    "english": "English"
+  },
   "character-sheet": {
     "fate-points": "Fate Points",
     "edit": "Edit",

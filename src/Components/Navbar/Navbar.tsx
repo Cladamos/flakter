@@ -9,7 +9,7 @@ function Navbar() {
   const [opened, { toggle }] = useDisclosure()
   const [openedPopover, setOpenedPopover] = useState<boolean>(false)
   const { colorScheme, setColorScheme } = useMantineColorScheme()
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   const toggleColorScheme = () => {
     setColorScheme(colorScheme === "dark" ? "light" : "dark")
@@ -49,19 +49,20 @@ function Navbar() {
                     <Popover.Dropdown p="xs">
                       <Stack gap="xs">
                         <Button
-                          variant="light"
+                          variant={i18n.language === "tr" ? "filled" : "light"}
                           onClick={() => {
                             i18n.changeLanguage("tr"), setOpenedPopover(false)
                           }}
                         >
-                          Turkish
+                          {t("navbar.turkish")}
                         </Button>
                         <Button
+                          variant={i18n.language === "en" ? "filled" : "light"}
                           onClick={() => {
                             i18n.changeLanguage("en"), setOpenedPopover(false)
                           }}
                         >
-                          English
+                          {t("navbar.english")}
                         </Button>
                       </Stack>
                     </Popover.Dropdown>
@@ -86,26 +87,27 @@ function Navbar() {
                 <Button m="lg" px={6} radius={8} variant="outline" onClick={() => setOpenedPopover((o) => !o)}>
                   <Group gap="xs">
                     <IconLanguage />
-                    <Text>Language</Text>
+                    <Text>{t("navbar.language")}</Text>
                   </Group>
                 </Button>
               </Popover.Target>
               <Popover.Dropdown w="85%" p="xs">
                 <Stack gap="xs">
                   <Button
-                    variant="light"
+                    variant={i18n.language === "tr" ? "filled" : "light"}
                     onClick={() => {
                       i18n.changeLanguage("tr"), setOpenedPopover(false)
                     }}
                   >
-                    Turkish
+                    {t("navbar.turkish")}
                   </Button>
                   <Button
+                    variant={i18n.language === "en" ? "filled" : "light"}
                     onClick={() => {
                       i18n.changeLanguage("en"), setOpenedPopover(false)
                     }}
                   >
-                    English
+                    {t("navbar.english")}
                   </Button>
                 </Stack>
               </Popover.Dropdown>
