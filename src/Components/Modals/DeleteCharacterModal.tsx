@@ -1,61 +1,46 @@
-import { Button, Group, Text, Stack, Menu } from "@mantine/core"
+import { Button, Group, Text, Stack } from "@mantine/core"
 import { notifications } from "@mantine/notifications"
 import { useCharacterStore } from "../../Stores/CharacterStore"
-import { IconTrash } from "@tabler/icons-react"
 import { modals } from "@mantine/modals"
 import { useThemeStore } from "../../Stores/ThemeStore"
+import { useTranslation } from "react-i18next"
 
 function DeleteCharacterModal() {
   const { currCharacter, removeCharacter } = useCharacterStore()
   const { setThemeColor } = useThemeStore()
+
+  const { t } = useTranslation()
 
   function handleDelete() {
     removeCharacter(currCharacter!.id)
     setThemeColor("indigo")
     modals.closeAll()
     notifications.show({
-      title: "Your character succesfuly deleted",
-      message: "Your " + currCharacter!.name + "gone to void D:",
+      title: t("delete-modal.title"),
+      message: t("delete-modal.notfication-1") + currCharacter!.name + t("delete-modal.notfication-2"),
       color: "red",
     })
   }
 
   return (
-    <Menu.Item
-      onClick={() =>
-        modals.open({
-          title: "Delete your character",
-          size: "sm",
-          radius: "md",
-          centered: true,
-          padding: "md",
-          children: (
-            <Stack>
-              <Text size="sm">
-                Are you sure you want to
-                <Text size="sm" c="red" inherit component="span">
-                  {" "}
-                  delete{" "}
-                </Text>
-                your character? This action is destructive and can't be turn back.
-              </Text>
-              <Group justify="flex-end">
-                <Button variant="outline" onClick={modals.closeAll}>
-                  Cancel
-                </Button>
-                <Button color="red" onClick={handleDelete}>
-                  Delete
-                </Button>
-              </Group>
-            </Stack>
-          ),
-        })
-      }
-      color="red"
-      leftSection={<IconTrash style={{ width: 14, height: 14 }} />}
-    >
-      Delete my character
-    </Menu.Item>
+    <Stack>
+      <Text size="sm">
+        {t("delete-modal.text-1")}
+        <Text size="sm" c="red" inherit component="span">
+          {" "}
+          {t("delete-modal.delete")}{" "}
+        </Text>
+        {t("delete-modal.text-2")}
+      </Text>
+      <Group justify="flex-end">
+        <Button variant="outline" onClick={modals.closeAll}>
+          {t("delete-modal.cancel-button")}
+        </Button>
+        <Button color="red" onClick={handleDelete}>
+          {t("delete-modal.delete-button")}
+        </Button>
+      </Group>
+    </Stack>
   )
 }
 export default DeleteCharacterModal

@@ -2,6 +2,7 @@ import { Paper, Stack, Text, Title } from "@mantine/core"
 import { useCharacterStore } from "../../Stores/CharacterStore"
 import "../CharacterSheet/CharacterSheet.css"
 import { modals } from "@mantine/modals"
+import { useTranslation } from "react-i18next"
 
 type CharacterDetailsModalProps = {
   isMobile: boolean | undefined
@@ -9,13 +10,15 @@ type CharacterDetailsModalProps = {
 
 function CharacterDetailsModal(props: CharacterDetailsModalProps) {
   const { currCharacter } = useCharacterStore()
+  const { t } = useTranslation()
+
   if (currCharacter) {
     const data: { val: string; message: string }[] = [
-      { val: currCharacter.aspects.highConcept, message: "High Concept: " },
-      { val: currCharacter.aspects.trouble, message: "Trouble: " },
-      { val: currCharacter.aspects.relationship, message: "Relationship: " },
-      { val: currCharacter.aspects.otherAspect, message: "Other Aspect: " },
-      { val: currCharacter.aspects.secondOtherAspect, message: "Other Aspect: " },
+      { val: currCharacter.aspects.highConcept, message: t("character-details.high-concept") },
+      { val: currCharacter.aspects.trouble, message: t("character-details.trouble") },
+      { val: currCharacter.aspects.relationship, message: t("character-details.relationship") },
+      { val: currCharacter.aspects.otherAspect, message: t("character-details.other-aspects") },
+      { val: currCharacter.aspects.secondOtherAspect, message: t("character-details.other-aspects") },
     ]
     return (
       <Title
@@ -26,7 +29,7 @@ function CharacterDetailsModal(props: CharacterDetailsModalProps) {
         c="var(--mantine-color-anchor)"
         onClick={() => {
           modals.open({
-            title: "Character Details",
+            title: t("character-details.details"),
             size: "lg",
             padding: "lg",
             radius: "md",

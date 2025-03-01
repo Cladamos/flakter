@@ -1,4 +1,4 @@
-import { IconChevronDown, IconPencil, IconSwitch2, IconPlus, IconFileArrowRight } from "@tabler/icons-react"
+import { IconChevronDown, IconPencil, IconSwitch2, IconPlus, IconFileArrowRight, IconTrash } from "@tabler/icons-react"
 import { Group, Avatar, Text, Menu, rem } from "@mantine/core"
 import { notifications } from "@mantine/notifications"
 
@@ -7,9 +7,10 @@ import { useCharacterStore } from "../../Stores/CharacterStore"
 import DeleteCharacterModal from "../../Components/Modals/DeleteCharacterModal"
 import { modals } from "@mantine/modals"
 import CreateCharacterSelectorModal from "../../Components/Modals/CreateCharacterSelectorModal"
-import SelectCharacterModal, { handleSelectCharacterError } from "../Modals/SelectCharacterModal"
+import SelectCharacterModal from "../Modals/SelectCharacterModal"
 import CreateCharacterModal from "../Modals/CreateCharacterModal"
 import { useThemeStore } from "../../Stores/ThemeStore"
+import { useTranslation } from "react-i18next"
 
 type NavbarAvatarProps = {
   size: string
@@ -20,13 +21,23 @@ function NavbarAvatar(props: NavbarAvatarProps) {
   const { currCharacter, characters } = useCharacterStore()
   const { setThemeColor } = useThemeStore()
 
+  const { t } = useTranslation()
+
   function handleExportCharacter() {
     copy(JSON.stringify(currCharacter)).then(() =>
       notifications.show({
-        title: "Character copied",
-        message: "Your character successfully copied to clipboard",
+        title: t("navbar-avatar.copied"),
+        message: t("navbar-avatar.copied-desc"),
       }),
     )
+  }
+
+  function handleSelectCharacterError() {
+    notifications.show({
+      title: t("select-modal.error-title"),
+      message: t("select-modal.error"),
+      color: "red",
+    })
   }
 
   if (currCharacter) {
@@ -45,12 +56,12 @@ function NavbarAvatar(props: NavbarAvatarProps) {
             </Group>
           </Menu.Target>
           <Menu.Dropdown>
-            <Menu.Label>Actions</Menu.Label>
+            <Menu.Label>{t("navbar-avatar.actions")}</Menu.Label>
             <Menu.Item
               leftSection={<IconPencil style={{ width: rem(14), height: rem(14) }} />}
               onClick={() => {
                 modals.open({
-                  title: "Create Your Own Character",
+                  title: t("navbar-avatar.edit-title"),
                   size: "xl",
                   padding: "lg",
                   radius: "md",
@@ -62,7 +73,7 @@ function NavbarAvatar(props: NavbarAvatarProps) {
                 })
               }}
             >
-              Edit my character
+              {t("navbar-avatar.edit")}
             </Menu.Item>
             <Menu.Item
               leftSection={<IconSwitch2 style={{ width: rem(14), height: rem(14) }} />}
@@ -71,7 +82,7 @@ function NavbarAvatar(props: NavbarAvatarProps) {
                   handleSelectCharacterError()
                 } else {
                   modals.open({
-                    title: "Select your character",
+                    title: t("navbar-avatar.change-title"),
                     size: "sm",
                     padding: "md",
                     radius: "md",
@@ -81,12 +92,12 @@ function NavbarAvatar(props: NavbarAvatarProps) {
                 }
               }}
             >
-              Change character
+              {t("navbar-avatar.change")}
             </Menu.Item>
             <Menu.Item
               onClick={() =>
                 modals.open({
-                  title: "Which way do you want to create a character?",
+                  title: t("navbar-avatar.create-title"),
                   size: "md",
                   padding: "xl",
                   radius: "md",
@@ -96,14 +107,29 @@ function NavbarAvatar(props: NavbarAvatarProps) {
               }
               leftSection={<IconPlus style={{ width: rem(14), height: rem(14) }} />}
             >
-              Create new character
+              {t("navbar-avatar.create")}
             </Menu.Item>
             <Menu.Item leftSection={<IconFileArrowRight style={{ width: rem(14), height: rem(14) }} />} onClick={handleExportCharacter}>
-              Export your character
+              {t("navbar-avatar.export")}
             </Menu.Item>
             <Menu.Divider />
-            <Menu.Label>Danger zone</Menu.Label>
-            <DeleteCharacterModal />
+            <Menu.Label>{t("navbar-avatar.danger-zone")}</Menu.Label>
+            <Menu.Item
+              onClick={() =>
+                modals.open({
+                  title: t("navbar-avatar.delete-title"),
+                  size: "sm",
+                  radius: "md",
+                  centered: true,
+                  padding: "md",
+                  children: <DeleteCharacterModal />,
+                })
+              }
+              color="red"
+              leftSection={<IconTrash style={{ width: 14, height: 14 }} />}
+            >
+              {t("navbar-avatar.delete")}
+            </Menu.Item>
           </Menu.Dropdown>
         </Menu>
       </>

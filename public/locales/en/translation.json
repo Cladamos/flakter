@@ -1,5 +1,69 @@
 {
   "character-sheet": {
-    "fate-points": "Fate Points"
+    "fate-points": "Fate Points",
+    "edit": "Edit",
+    "go-sheet": "Go sheet",
+    "go-notes": "Go notes",
+    "physical-stress": "Physical stresses",
+    "mental-stress": "Mental stresses",
+    "mild": "Mild",
+    "moderate": "Moderate",
+    "severe": "Severe",
+    "stunts": "Stunts",
+    "skills": "Skills",
+    "notes": "Notes",
+    "total": "Total"
+  },
+  "character-details": {
+    "details": "Character Details",
+    "high-concept": "High Concept: ",
+    "trouble": "Trouble: ",
+    "relationship": "Relationship: ",
+    "other-aspects": "Other Aspects: "
+  },
+  "notes": {
+    "title": "Title",
+    "placeholder": "Your note ...",
+    "take-note": "Take note",
+    "edit-note": "Edit your note",
+    "deleted": "Deleted",
+    "deleted-desc": "Your note is succesfuly deleted",
+    "created": "Created",
+    "created-desc": "Your note is succesfuly created",
+    "empty-note": "Empty Note",
+    "empty-note-desc": "You can't create a empty note",
+    "edited": "Succesfull",
+    "edited-desc": "Your note is succesfuly edited"
+  },
+  "navbar-avatar": {
+    "actions": "Actions",
+    "edit": "Edit my character",
+    "edit-title": "Edit your character",
+    "change": "Change character",
+    "change-title": "Select your character",
+    "create": "Create new character",
+    "create-title": "Which way do you want to create a character?",
+    "export": "Export your character",
+    "danger-zone": "Dangesr zone",
+    "delete": "Delete my character",
+    "delete-title": "Delete your character",
+    "copied": "Character copied",
+    "copied-desc": "Your character successfully copied to clipboard"
+  },
+  "delete-modal": {
+    "delete": "delete",
+    "text-1": "Are you sure you want to",
+    "text-2": "your character? This action is destructive and can't be turn back.",
+    "cancel-button": "Cancel",
+    "delete-button": "Delete",
+    "title": "Your character succesfuly deleted",
+    "notfication-1:": "Your ",
+    "notfication-2:": "gone to void D:"
+  },
+  "select-modal": {
+    "error-title": "You have only one character",
+    "error": "You can create new characters with using menu",
+    "successfull-title": "Current character is ",
+    "successfull": "Current character succesfuly changed"
   }
 }

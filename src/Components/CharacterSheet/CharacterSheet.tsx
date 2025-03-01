@@ -47,15 +47,15 @@ function CharacterSheet() {
 
   if (currCharacter) {
     const basicValues = [
-      { text: "Physical Stress", val: currCharacter.physicalStress, maxVal: currCharacter.maxPhysicalStress },
-      { text: "Mental Stress", val: currCharacter.mentalStress, maxVal: currCharacter.maxMentalStress },
+      { text: t("character-sheet.physical-stress"), val: currCharacter.physicalStress, maxVal: currCharacter.maxPhysicalStress },
+      { text: t("character-sheet.mental-stress"), val: currCharacter.mentalStress, maxVal: currCharacter.maxMentalStress },
     ]
 
     const consequences = [
-      { text: "Mild", val: currCharacter.consequences.mild, location: "mild", stress: 2 },
-      { text: "Moderate", val: currCharacter.consequences.moderate, location: "moderate", stress: 4 },
-      { text: "Severe", val: currCharacter.consequences.severe, location: "severe", stress: 6 },
-      { text: "Mild", val: currCharacter.consequences.secondMild, location: "secondMild", stress: 2 },
+      { text: t("character-sheet.mild"), val: currCharacter.consequences.mild, location: "mild", stress: 2 },
+      { text: t("character-sheet.moderate"), val: currCharacter.consequences.moderate, location: "moderate", stress: 4 },
+      { text: t("character-sheet.severe"), val: currCharacter.consequences.severe, location: "severe", stress: 6 },
+      { text: t("character-sheet.mild"), val: currCharacter.consequences.secondMild, location: "secondMild", stress: 2 },
     ]
 
     const { scrollIntoView, targetRef } = useScrollIntoView<HTMLDivElement>({
@@ -106,12 +106,12 @@ function CharacterSheet() {
               <Group pb="sm" style={{ position: "relative", width: "100%" }}>
                 <CharacterDetailsModal isMobile={isMobile} />
                 <Group style={{ position: "absolute", right: 0 }} gap={0}>
-                  <Tooltip label={isNotesView ? "Go sheet" : "Go notes"}>
+                  <Tooltip label={isNotesView ? t("character-sheet.go-sheet") : t("character-sheet.go-notes")}>
                     <Button px="xs" size="xs" variant="transparent" onClick={handleNotesView}>
                       {isNotesView ? <IconFile /> : <IconNotebook />}
                     </Button>
                   </Tooltip>
-                  <Tooltip label="Edit">
+                  <Tooltip label={t("character-sheet.edit")}>
                     <Button
                       px="xs"
                       size="xs"
@@ -205,7 +205,7 @@ function CharacterSheet() {
               <>
                 <Card withBorder shadow="sm" radius="md">
                   <CardSection withBorder inheritPadding py="xs">
-                    <Text>Your Stunts</Text>
+                    <Text>{t("character-sheet.stunts")}</Text>
                   </CardSection>
                   <SimpleGrid mt="sm" cols={{ base: 1, sm: 2, lg: 3 }}>
                     {currCharacter.stunts.map((s) => (
@@ -219,7 +219,7 @@ function CharacterSheet() {
                 </Card>
                 <Card h={isMobile ? 1150 : 350} ref={targetRef} withBorder shadow="sm" radius="md">
                   <CardSection withBorder inheritPadding py="xs">
-                    <Text>Notes</Text>
+                    <Text>{t("character-sheet.notes")}</Text>
                   </CardSection>
                   <Notes />
                 </Card>
@@ -290,7 +290,7 @@ function CharacterSheet() {
                         ))}
                       </Group>
                       <Text w={isMobile ? "100%" : undefined} style={{ justifySelf: "end" }} size="lg" fw={700}>
-                        Total:{" "}
+                        {t("character-sheet.total")}:{" "}
                         {modifier === 0
                           ? diceRollSum > 0
                             ? "+" + diceRollSum
@@ -326,7 +326,7 @@ function CharacterSheet() {
                           size="lg"
                           fw={700}
                         >
-                          Total:{" "}
+                          {t("character-sheet.total")}:{" "}
                           {modifier === 0
                             ? diceRollSum > 0
                               ? "+" + diceRollSum
@@ -340,7 +340,7 @@ function CharacterSheet() {
 
                 <Card withBorder shadow="sm" radius="md">
                   <CardSection withBorder inheritPadding py="xs">
-                    <Text>Skills</Text>
+                    <Text>{t("character-sheet.skills")}</Text>
                   </CardSection>
                   <Grid mt="xs">
                     {currCharacter.skills.map((s) => (

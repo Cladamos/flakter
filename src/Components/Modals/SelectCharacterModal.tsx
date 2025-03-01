@@ -3,25 +3,20 @@ import { notifications } from "@mantine/notifications"
 import { Character, useCharacterStore } from "../../Stores/CharacterStore"
 import { useThemeStore } from "../../Stores/ThemeStore"
 import { modals } from "@mantine/modals"
-
-export function handleSelectCharacterError() {
-  notifications.show({
-    title: "You have only one character",
-    message: "You can create new characters with using menu",
-    color: "red",
-  })
-}
+import { useTranslation } from "react-i18next"
 
 function SelectCharacterModal() {
   const { currCharacter, characters, setCurrCharacter } = useCharacterStore()
   const { setThemeColor } = useThemeStore()
 
+  const { t } = useTranslation()
+
   function handleSetCharacter(character: Character) {
     setCurrCharacter(character)
     modals.closeAll()
     notifications.show({
-      title: "Current character is " + character.name,
-      message: "Current character succesfuly changed",
+      title: t("select-modal.successfull-title") + character.name,
+      message: t("select-modal.successfull"),
     })
     setThemeColor(character.theme)
   }

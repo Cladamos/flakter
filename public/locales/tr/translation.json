@@ -1,5 +1,69 @@
 {
   "character-sheet": {
-    "fate-points": "Fate Puanları"
+    "fate-points": "Fate Puanları",
+    "edit": "Düzenle",
+    "go-sheet": "Karakter kağıdına git",
+    "go-notes": "Notlara git",
+    "physical-stress": "Fiziksel stress'ler",
+    "mental-stress": "Zihinsel stress'ler",
+    "mild": "Hafif hasar",
+    "moderate": "Ortalama hasar",
+    "severe": "Ağır hasar",
+    "stunts": "Stunt'lar",
+    "skills": "Yetenekler",
+    "notes": "Notlar",
+    "total": "Toplam"
+  },
+  "character-details": {
+    "details": "Karakter Detayları",
+    "high-concept": "Tek kelime ile karakterin: ",
+    "trouble": "Zayıflığın: ",
+    "relationship": "İlişkilerin: ",
+    "other-aspects": "Diğer özelliklerin: "
+  },
+  "notes": {
+    "title": "Başlık",
+    "placeholder": "Notun ...",
+    "take-note": "Not al",
+    "edit-note": "Notunu düzenle",
+    "deleted": "Silindi",
+    "deleted-desc": "Notunuz başarıyla silindi",
+    "created": "Oluşturuldu",
+    "created-desc": "Notunuz başarıyla oluşturuldu",
+    "empty-note": "Boş Not",
+    "empty-note-desc": "Boş not oluşturamazsınız",
+    "edited": "Başarılı",
+    "edited-desc": "Notunuz başarıyla düzenlenmiştir"
+  },
+  "navbar-avatar": {
+    "actions": "Aksiyonlar",
+    "edit": "Karakterimi düzenle",
+    "edit-title:": "Karakterini düzenle",
+    "change": "Karakter değiştir",
+    "change-title": "Karakterini seç",
+    "create": "Yeni karakter oluştur",
+    "create-title": "Hangi yolla karakter oluşturmak istersin?",
+    "export": "Karakterimi dışa aktar",
+    "danger-zone": "Tehlikeli bölge",
+    "delete": "Karakterimi sil",
+    "delete-title": "Karakterimi sil",
+    "copied": "Karakter kopyalandı",
+    "copied-desc": "Karakteriniz başarıyla kopyalandı"
+  },
+  "delete-modal": {
+    "delete": "silmek",
+    "text-1": "Karakterini ",
+    "text-2": "istediğine emin misin? Bu işlem geri döndürülemez.",
+    "cancel-button": "İptal et",
+    "delete-button": "Sil",
+    "title": "Karakteriniz başarıyla silindi",
+    "notfication-1:": "Canım ",
+    "notfication-2:": "uzay boşluğunda kayboldu D:"
+  },
+  "select-modal": {
+    "error-title": "Sadece bir karakterin var",
+    "error": "Karakter oluşturmak için avatarına tıklayarak menüye ulaşabilirsin",
+    "successfull-title": "Şu anki karakterin  ",
+    "successfull": "Karakterin başarıyla değiştirilmiştir"
   }
 }

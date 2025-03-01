@@ -22,6 +22,7 @@ import { useEffect, useState } from "react"
 import { v4 as uuidv4 } from "uuid"
 import { useScrollIntoView } from "@mantine/hooks"
 import { useCharacterStore } from "../Stores/CharacterStore"
+import { useTranslation } from "react-i18next"
 
 export type Note = {
   id: string
@@ -101,6 +102,7 @@ function Notes() {
   const [isEditing, setIsEditing] = useState(false)
 
   const { colorScheme } = useMantineColorScheme()
+  const { t } = useTranslation()
 
   useEffect(() => {
     setNotes(currCharacter!.notes)
@@ -148,8 +150,8 @@ function Notes() {
   function handleCreateNote() {
     if (noteTitle == "" && noteContent == "") {
       notifications.show({
-        title: "Empty note",
-        message: "You can't create a empty note",
+        title: t("notes.empty-note"),
+        message: t("notes.empty-note-desc"),
         color: "red",
       })
       return
@@ -159,16 +161,16 @@ function Notes() {
         ...notes.map((n) => (n.id == editId ? { id: editId, title: noteTitle, content: noteContent, color: noteColor, isEditing: false } : n)),
       ])
       notifications.show({
-        title: "Succesful",
-        message: "Your note is succesfuly edited",
+        title: t("notes.edited"),
+        message: t("notes.edited-desc"),
       })
       setEditId("")
       setIsEditing(false)
     } else {
       setNotes((notes) => [...notes, { id: uuidv4(), title: noteTitle, content: noteContent, color: noteColor, isEditing: false }])
       notifications.show({
-        title: "Created",
-        message: "Your note is succesfuly created",
+        title: t("notes.created"),
+        message: t("notes.created-desc"),
       })
     }
     setNoteTitle("")
@@ -178,8 +180,8 @@ function Notes() {
   function handleDeleteNote(n: Note) {
     setNotes((notes) => [...notes.filter((note) => note.id !== n.id)])
     notifications.show({
-      title: "Deleted",
-      message: "Your note is succesfuly deleted",
+      title: t("notes.deleted"),
+      message: t("notes.deleted-desc"),
       color: "red",
     })
   }
@@ -221,7 +223,7 @@ function Notes() {
                       value={noteTitle}
                       size="lg"
                       variant="unstyled"
-                      placeholder="Title"
+                      placeholder={t("notes.title")}
                       onChange={(event) => setNoteTitle(event.currentTarget.value)}
                     />
                     {isEditing ? (
@@ -236,7 +238,7 @@ function Notes() {
                 <Textarea
                   value={noteContent}
                   size="md"
-                  placeholder="Your Note ..."
+                  placeholder={t("notes.placeholder")}
                   variant="unstyled"
                   autosize
                   maxRows={5}
@@ -245,7 +247,7 @@ function Notes() {
                 ></Textarea>
                 <Group justify="space-between">
                   <Button size="sm" variant="default" style={{ marginTop: "auto", flexGrow: 1 }} onClick={handleCreateNote}>
-                    {editId !== "" ? "Edit your note" : "Take note"}
+                    {editId !== "" ? t("notes.edit-note") : t("notes.take-note")}
                   </Button>
                   <Popover>
                     <Popover.Target>
