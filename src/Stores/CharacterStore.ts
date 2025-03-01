@@ -20,7 +20,7 @@ export type Character = {
   }
   aspects: { highConcept: string; trouble: string; relationship: string; otherAspect: string; secondOtherAspect: string }
   stunts: string[]
-  skills: { name: string; bonus: number }[]
+  skills: { id: string; name: string; bonus: number }[]
   theme: string
   notes: Note[]
 }

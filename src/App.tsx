@@ -9,10 +9,12 @@ import { ModalsProvider } from "@mantine/modals"
 import { useCharacterStore } from "./Stores/CharacterStore"
 import { useThemeStore } from "./Stores/ThemeStore"
 import Navbar from "./Components/Navbar/Navbar"
+import useUpdateSkillsOnLangChange from "./Components/updateCharacterSkills"
 
 function App() {
   const { currCharacter } = useCharacterStore()
   const { theme } = useThemeStore()
+  useUpdateSkillsOnLangChange()
 
   return (
     <MantineProvider theme={theme}>

@@ -98,25 +98,25 @@ function CreateCharacterModal(props: createCharacterModalProps) {
       },
       aspects: { highConcept: "", trouble: "", relationship: "", otherAspect: "", secondOtherAspect: "" },
       skills: [
-        { name: t("create-modal.skill-names.academics"), bonus: 0 },
-        { name: t("create-modal.skill-names.athletics"), bonus: 0 },
-        { name: t("create-modal.skill-names.burglary"), bonus: 0 },
-        { name: t("create-modal.skill-names.contacts"), bonus: 0 },
-        { name: t("create-modal.skill-names.crafts"), bonus: 0 },
-        { name: t("create-modal.skill-names.deceive"), bonus: 0 },
-        { name: t("create-modal.skill-names.drive"), bonus: 0 },
-        { name: t("create-modal.skill-names.empathy"), bonus: 0 },
-        { name: t("create-modal.skill-names.fight"), bonus: 0 },
-        { name: t("create-modal.skill-names.investigate"), bonus: 0 },
-        { name: t("create-modal.skill-names.lore"), bonus: 0 },
-        { name: t("create-modal.skill-names.notice"), bonus: 0 },
-        { name: t("create-modal.skill-names.physique"), bonus: 0 },
-        { name: t("create-modal.skill-names.provoke"), bonus: 0 },
-        { name: t("create-modal.skill-names.rapport"), bonus: 0 },
-        { name: t("create-modal.skill-names.resources"), bonus: 0 },
-        { name: t("create-modal.skill-names.shoot"), bonus: 0 },
-        { name: t("create-modal.skill-names.stealth"), bonus: 0 },
-        { name: t("create-modal.skill-names.will"), bonus: 0 },
+        { id: "academics", name: t("create-modal.skill-names.academics"), bonus: 0 },
+        { id: "athletics", name: t("create-modal.skill-names.athletics"), bonus: 0 },
+        { id: "burglary", name: t("create-modal.skill-names.burglary"), bonus: 0 },
+        { id: "contacts", name: t("create-modal.skill-names.contacts"), bonus: 0 },
+        { id: "crafts", name: t("create-modal.skill-names.crafts"), bonus: 0 },
+        { id: "deceive", name: t("create-modal.skill-names.deceive"), bonus: 0 },
+        { id: "drive", name: t("create-modal.skill-names.drive"), bonus: 0 },
+        { id: "empathy", name: t("create-modal.skill-names.empathy"), bonus: 0 },
+        { id: "fight", name: t("create-modal.skill-names.fight"), bonus: 0 },
+        { id: "investigate", name: t("create-modal.skill-names.investigate"), bonus: 0 },
+        { id: "lore", name: t("create-modal.skill-names.lore"), bonus: 0 },
+        { id: "notice", name: t("create-modal.skill-names.notice"), bonus: 0 },
+        { id: "physique", name: t("create-modal.skill-names.physique"), bonus: 0 },
+        { id: "provoke", name: t("create-modal.skill-names.provoke"), bonus: 0 },
+        { id: "rapport", name: t("create-modal.skill-names.rapport"), bonus: 0 },
+        { id: "resources", name: t("create-modal.skill-names.resources"), bonus: 0 },
+        { id: "shoot", name: t("create-modal.skill-names.shoot"), bonus: 0 },
+        { id: "stealth", name: t("create-modal.skill-names.stealth"), bonus: 0 },
+        { id: "will", name: t("create-modal.skill-names.will"), bonus: 0 },
       ],
       stunts: [],
       theme: "indigo",
@@ -143,8 +143,17 @@ function CreateCharacterModal(props: createCharacterModalProps) {
   }, [props.type, currCharacter, form])
 
   function handleCreateSkill() {
-    form.setValues({ skills: [...form.getValues().skills, { name: newSkill, bonus: 0 }] })
+    const isExist = form.getValues().skills.find((s) => s.id === newSkill)
+    if (!isExist) {
+      form.setValues({ skills: [...form.getValues().skills, { id: newSkill, name: newSkill, bonus: 0 }] })
+      setIsOnSkillCreating(false)
+      return
+    }
     setIsOnSkillCreating(false)
+    notifications.show({
+      title: "Cannot create same skill",
+      message: "This skill is already exist in your character's skills",
+    })
   }
 
   function handleSubmit(c: Character) {
