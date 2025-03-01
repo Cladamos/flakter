@@ -27,6 +27,7 @@ import { useMediaQuery } from "@mantine/hooks"
 import { IconCircleFilled, IconInfoCircle } from "@tabler/icons-react"
 import { modals } from "@mantine/modals"
 import { useTranslation } from "react-i18next"
+import { notifications } from "@mantine/notifications"
 
 const colors = ["gray", "red", "pink", "grape", "violet", "indigo", "blue", "cyan", "teal", "green", "lime", "yellow", "orange"] // Comes here https://yeun.github.io/open-color/
 
@@ -137,11 +138,19 @@ function CreateCharacterModal(props: createCharacterModalProps) {
     const newCharacter = calculateStressBoxes(c)
     if (props.type === "creating") {
       addCharacter(newCharacter)
+      notifications.show({
+        title: t("create-modal.created"),
+        message: t("create-modal.created-desc-1") + newCharacter.name + t("create-modal.created-desc-2"),
+      })
     }
     if (props.type === "editing") {
       updateCharacter(currCharacter!.id, {
         ...newCharacter,
         stunts: newCharacter.stunts.filter((_, index) => (6 - newCharacter.refresh > index ? newCharacter : "")),
+      })
+      notifications.show({
+        title: t("create-modal.edited"),
+        message: t("create-modal.edited-desc"),
       })
     }
     setThemeColor(newCharacter.theme)
@@ -360,10 +369,21 @@ function CreateCharacterModal(props: createCharacterModalProps) {
         <Stepper.Completed>
           <Container size="xs" my="lg" p="xl">
             <Stack justify="center">
-              <Text size="xl">{t("create-modal.thanks")}</Text>
-              <Button size="lg" type="submit" variant="gradient" gradient={{ from: "grape", to: "cyan", deg: 90 }}>
-                {t("create-modal.create-button")}
-              </Button>
+              {props.type === "creating" ? (
+                <>
+                  <Text size="xl">{t("create-modal.thanks")}</Text>
+                  <Button size="lg" type="submit" variant="gradient" gradient={{ from: "grape", to: "cyan", deg: 90 }}>
+                    {t("create-modal.create-button")}
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Text size="xl">{t("create-modal.edit-info")}</Text>
+                  <Button size="lg" type="submit" variant="gradient" gradient={{ from: "grape", to: "cyan", deg: 90 }}>
+                    {t("create-modal.confirm-button")}
+                  </Button>
+                </>
+              )}
             </Stack>
           </Container>
         </Stepper.Completed>

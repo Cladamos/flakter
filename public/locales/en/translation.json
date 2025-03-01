@@ -116,8 +116,15 @@
     "stress-info": "Stress boxes will calculated automaticly if you don't want to customize leave it unchecked",
     "thanks": "Thanks for using Flakter for creating your character. I hope you will like it.",
     "create-button": "Create",
+    "edit-info": "New changes will override your old character, please confirm your changes.",
+    "confirm-button": "Confirm",
     "next-button": "Next step",
-    "back-button": "Back"
+    "back-button": "Back",
+    "created": "Your character is created",
+    "created-desc-1": "Have fun with your ",
+    "created-desc-2": ". Such a great name :D",
+    "edited": "Your character succesfuly edited",
+    "edited-desc": "Have fun with your new changes"
   },
   "import-modal": {
     "modal-title": "Paste your character JSON",

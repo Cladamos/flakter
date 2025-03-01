@@ -116,8 +116,15 @@
     "stress-info": "Eğer işaretlemediğiniz takdirde otomatik hesaplanacaktır ya da işaretleyerek istediğiniz değeri girebilirsiniz",
     "thanks": "Karakterinizi oluşturuken Flakter kullandığınız için teşekkür ederim, umarım beğenirsiniz :D",
     "create-button": "Oluştur",
+    "edit-info": "Yeni değişiklikler önceki karakterinizin üstüne yazılacaktır, lütfen değişikliklerinizi onaylayınız.",
+    "confirm-button": "Onayla",
     "next-button": "Sonraki adım",
-    "back-button": "Geri"
+    "back-button": "Geri",
+    "created": "Karakteriniz oluşturuldu",
+    "created-desc-1": "Bir efsane daha doğdu: ",
+    "created-desc-2": ". Harika bir isim :D",
+    "edited": "Karakteriniz başarıyla düzenlendi",
+    "edited-desc": "Yeni değişiklikler ile mutlusundur umarım  :D"
   },
   "import-modal": {
     "modal-title": "JSON formatında olan karakterinizi yapıştırınız",
