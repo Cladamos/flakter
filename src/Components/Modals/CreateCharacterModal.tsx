@@ -23,8 +23,8 @@ import {
 } from "@mantine/core"
 import { useEffect, useRef, useState } from "react"
 import { useThemeStore } from "../../Stores/ThemeStore"
-import { useMediaQuery } from "@mantine/hooks"
-import { IconCircleFilled, IconInfoCircle } from "@tabler/icons-react"
+import { useClickOutside, useMediaQuery } from "@mantine/hooks"
+import { IconCircleFilled, IconInfoCircle, IconMinus, IconPlus } from "@tabler/icons-react"
 import { modals } from "@mantine/modals"
 import { useTranslation } from "react-i18next"
 import { notifications } from "@mantine/notifications"
@@ -39,12 +39,20 @@ function CreateCharacterModal(props: createCharacterModalProps) {
   const [active, setActive] = useState(0)
   const [creatableStuntCount, setCreatableStuntCount] = useState<number>(3)
   const [isCustomStress, setIsCustomStress] = useState<boolean[]>(props.type === "creating" ? [false, false] : [true, true])
+  const [isOnSkillCreating, setIsOnSkillCreating] = useState<boolean>(false)
+  const [newSkill, setNewSkill] = useState<string>("")
   const nextStep = () => setActive((current) => (current < 4 ? current + 1 : current))
   const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current))
+
+  const outsideClickRef = useClickOutside(() => {
+    setIsOnSkillCreating(false), setNewSkill("")
+  })
 
   const isMobile = useMediaQuery(`(max-width: ${em(1200)})`)
   const { themeColor, setThemeColor } = useThemeStore()
   const { currCharacter, addCharacter, updateCharacter } = useCharacterStore()
+
+  const newSkillInput = useRef<HTMLInputElement | null>(null)
 
   const { t } = useTranslation()
 
@@ -133,6 +141,11 @@ function CreateCharacterModal(props: createCharacterModalProps) {
       initialLoad.current = false
     }
   }, [props.type, currCharacter, form])
+
+  function handleCreateSkill() {
+    form.setValues({ skills: [...form.getValues().skills, { name: newSkill, bonus: 0 }] })
+    setIsOnSkillCreating(false)
+  }
 
   function handleSubmit(c: Character) {
     const newCharacter = calculateStressBoxes(c)
@@ -311,7 +324,7 @@ function CreateCharacterModal(props: createCharacterModalProps) {
                 </Group>
               </Card.Section>
 
-              <Grid mt="sm">
+              <Grid align="end" mt="sm">
                 {form.getValues().skills.map((s, index) => (
                   <Grid.Col span={{ base: 12, md: 4, lg: 3 }} key={index}>
                     <NumberInput
@@ -325,6 +338,43 @@ function CreateCharacterModal(props: createCharacterModalProps) {
                     />
                   </Grid.Col>
                 ))}
+                <Grid.Col span={{ base: 12, md: 4, lg: 3 }}>
+                  <Stack gap={4}>
+                    <Text size="sm">New Skill</Text>
+                    {isOnSkillCreating ? (
+                      <Group ref={outsideClickRef} gap={4} wrap="nowrap">
+                        <TextInput
+                          value={newSkill}
+                          onChange={(e) => setNewSkill(e.currentTarget.value)}
+                          w="90%"
+                          ref={newSkillInput}
+                          size="sm"
+                          radius="md"
+                        />
+                        <Button onClick={handleCreateSkill} radius="md" variant="default" px={8} size="sm">
+                          <IconPlus />
+                        </Button>
+                      </Group>
+                    ) : (
+                      //TODO: Find better solution than setTimeout
+                      <Button
+                        onClick={() => {
+                          setIsOnSkillCreating(true)
+                          setTimeout(() => {
+                            newSkillInput.current?.focus()
+                          }, 1)
+                        }}
+                        fullWidth
+                        size="sm"
+                        radius="md"
+                        variant="outline"
+                        leftSection={<IconPlus />}
+                      >
+                        Create
+                      </Button>
+                    )}
+                  </Stack>
+                </Grid.Col>
               </Grid>
             </Card>
             {isMobile && (
