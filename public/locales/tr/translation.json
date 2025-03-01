@@ -38,19 +38,16 @@
   "navbar-avatar": {
     "actions": "Aksiyonlar",
     "edit": "Karakterimi düzenle",
-    "edit-title:": "Karakterini düzenle",
-    "change": "Karakter değiştir",
-    "change-title": "Karakterini seç",
+    "select": "Karakter değiştir",
     "create": "Yeni karakter oluştur",
-    "create-title": "Hangi yolla karakter oluşturmak istersin?",
     "export": "Karakterimi dışa aktar",
     "danger-zone": "Tehlikeli bölge",
     "delete": "Karakterimi sil",
-    "delete-title": "Karakterimi sil",
     "copied": "Karakter kopyalandı",
     "copied-desc": "Karakteriniz başarıyla kopyalandı"
   },
   "delete-modal": {
+    "modal-title": "Karakterimi sil",
     "delete": "silmek",
     "text-1": "Karakterini ",
     "text-2": "istediğine emin misin? Bu işlem geri döndürülemez.",
@@ -61,9 +58,26 @@
     "notfication-2:": "uzay boşluğunda kayboldu D:"
   },
   "select-modal": {
+    "modal-title": "Karakterini seç",
     "error-title": "Sadece bir karakterin var",
     "error": "Karakter oluşturmak için avatarına tıklayarak menüye ulaşabilirsin",
     "successfull-title": "Şu anki karakterin  ",
     "successfull": "Karakterin başarıyla değiştirilmiştir"
+  },
+  "create-modal": {
+    "modal-title": "Karakterini oluştur",
+    "modal-title-edit": "Karakterini düzenle"
+  },
+  "import-modal": {
+    "modal-title": "JSON formatında olan karakterinizi yapıştırınız",
+    "create": "Oluştur",
+    "json-error": "JSON formatınız karakter oluşturmak için uygun değil",
+    "created": "Karakteriniz oluşturuldu",
+    "created-desc": "İyi eğlenceler  "
+  },
+  "create-selector-modal": {
+    "modal-title": "Hangi yolla karakter oluşturmak istersin?",
+    "json-button": "JSON ile içe aktar",
+    "create-button": "Kendi karakterini oluştur"
   }
 }

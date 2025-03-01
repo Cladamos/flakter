@@ -5,12 +5,15 @@ import { useEffect, useState } from "react"
 import { Character, useCharacterStore } from "../../Stores/CharacterStore"
 import { useThemeStore } from "../../Stores/ThemeStore"
 import { modals } from "@mantine/modals"
+import { useTranslation } from "react-i18next"
 
 function ImportCharacterModal() {
   const [data, setData] = useInputState<string>("")
   const { addCharacter } = useCharacterStore()
   const { setThemeColor } = useThemeStore()
   const [isJsonParseError, setIsJsonParseError] = useState(false)
+
+  const { t } = useTranslation()
 
   let character: Character
 
@@ -71,8 +74,8 @@ function ImportCharacterModal() {
     addCharacter(character)
 
     notifications.show({
-      title: "Your character is created",
-      message: "Have fun with " + character.name + ".",
+      title: t("import-modal.created"),
+      message: t("import-modal.created-desc") + character.name + ".",
     })
     setData("")
     setThemeColor(character.theme)
@@ -82,7 +85,7 @@ function ImportCharacterModal() {
   return (
     <Stack>
       <JsonInput
-        error={isJsonParseError ? "Your JSON is not proper for character input" : null}
+        error={isJsonParseError ? t("import-modal.json-error") : null}
         value={data}
         onChange={(val) => setData(val)}
         size="md"
@@ -94,7 +97,7 @@ function ImportCharacterModal() {
       ></JsonInput>
 
       <Button disabled={isJsonParseError} onClick={handleCreate}>
-        Create
+        {t("import-modal.create")}
       </Button>
     </Stack>
   )

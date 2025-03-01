@@ -4,14 +4,18 @@ import CreateCharacterModal from "./CreateCharacterModal"
 import ImportCharacterModal from "./ImportCharacterModal"
 import { useCharacterStore } from "../../Stores/CharacterStore"
 import { useThemeStore } from "../../Stores/ThemeStore"
+import { useTranslation } from "react-i18next"
 
 function CreateCharacterSelectorModal() {
   const { currCharacter } = useCharacterStore()
   const { setThemeColor } = useThemeStore()
+
+  const { t } = useTranslation()
+
   function handleCreateCharacter() {
     modals.closeAll()
     modals.open({
-      title: "Create Your Own Character",
+      title: t("create-modal.modal-title"),
       size: "xl",
       padding: "lg",
       radius: "md",
@@ -25,7 +29,7 @@ function CreateCharacterSelectorModal() {
   function handleImportCharacter() {
     modals.closeAll()
     modals.open({
-      title: "Paste your character JSON",
+      title: t("import-modal.modal-title"),
       size: "md",
       padding: "xl",
       radius: "md",
@@ -36,10 +40,10 @@ function CreateCharacterSelectorModal() {
   return (
     <Stack>
       <Button size="md" fullWidth onClick={handleCreateCharacter}>
-        Create your own character
+        {t("create-selector-modal.create-button")}
       </Button>
       <Button variant="light" size="md" fullWidth onClick={handleImportCharacter}>
-        Import from JSON
+        {t("create-selector-modal.json-button")}
       </Button>
     </Stack>
   )

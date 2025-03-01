@@ -61,7 +61,7 @@ function NavbarAvatar(props: NavbarAvatarProps) {
               leftSection={<IconPencil style={{ width: rem(14), height: rem(14) }} />}
               onClick={() => {
                 modals.open({
-                  title: t("navbar-avatar.edit-title"),
+                  title: t("create-modal.modal-title-edit"),
                   size: "xl",
                   padding: "lg",
                   radius: "md",
@@ -82,7 +82,7 @@ function NavbarAvatar(props: NavbarAvatarProps) {
                   handleSelectCharacterError()
                 } else {
                   modals.open({
-                    title: t("navbar-avatar.change-title"),
+                    title: t("select-modal.modal-title"),
                     size: "sm",
                     padding: "md",
                     radius: "md",
@@ -92,12 +92,12 @@ function NavbarAvatar(props: NavbarAvatarProps) {
                 }
               }}
             >
-              {t("navbar-avatar.change")}
+              {t("navbar-avatar.select")}
             </Menu.Item>
             <Menu.Item
               onClick={() =>
                 modals.open({
-                  title: t("navbar-avatar.create-title"),
+                  title: t("create-selector-modal.modal-title"),
                   size: "md",
                   padding: "xl",
                   radius: "md",
@@ -117,7 +117,7 @@ function NavbarAvatar(props: NavbarAvatarProps) {
             <Menu.Item
               onClick={() =>
                 modals.open({
-                  title: t("navbar-avatar.delete-title"),
+                  title: t("delete-modal.modal-title"),
                   size: "sm",
                   radius: "md",
                   centered: true,
