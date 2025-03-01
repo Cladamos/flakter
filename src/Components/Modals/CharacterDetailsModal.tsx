@@ -21,10 +21,15 @@ function CharacterDetailsModal(props: CharacterDetailsModalProps) {
       { val: currCharacter.aspects.secondOtherAspect, message: t("character-details.other-aspects") },
     ]
     return (
-      <Title
+      <Text
         className="title-hover"
-        style={props.isMobile ? { width: "100%", textAlign: "start", marginLeft: "auto" } : { width: "100%", textAlign: "center" }}
-        size="h2"
+        style={
+          props.isMobile
+            ? { width: "70%", textAlign: "start", marginRight: "auto" }
+            : { width: "80%", textAlign: "center", marginRight: "auto", marginLeft: "auto" }
+        }
+        size="25px"
+        truncate="end"
         fw={900}
         c="var(--mantine-color-anchor)"
         onClick={() => {
@@ -52,7 +57,7 @@ function CharacterDetailsModal(props: CharacterDetailsModalProps) {
         }}
       >
         {currCharacter.name}
-      </Title>
+      </Text>
     )
   }
 }
