@@ -24,7 +24,7 @@ import {
 import { useEffect, useRef, useState } from "react"
 import { useThemeStore } from "../../Stores/ThemeStore"
 import { useClickOutside, useMediaQuery } from "@mantine/hooks"
-import { IconCircleFilled, IconInfoCircle, IconMinus, IconPlus } from "@tabler/icons-react"
+import { IconCircleFilled, IconInfoCircle, IconPlus } from "@tabler/icons-react"
 import { modals } from "@mantine/modals"
 import { useTranslation } from "react-i18next"
 import { notifications } from "@mantine/notifications"
