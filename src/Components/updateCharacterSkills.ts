@@ -2,31 +2,31 @@ import { useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import { useCharacterStore } from "../Stores/CharacterStore"
 
+export const officialSkills = [
+  "academics",
+  "athletics",
+  "burglary",
+  "contacts",
+  "crafts",
+  "deceive",
+  "drive",
+  "empathy",
+  "fight",
+  "investigate",
+  "lore",
+  "notice",
+  "physique",
+  "provoke",
+  "rapport",
+  "resources",
+  "shoot",
+  "stealth",
+  "will",
+]
+
 const useUpdateSkillsOnLangChange = () => {
   const { t, i18n } = useTranslation()
   const { characters, setCharacters, currCharacter, setCurrCharacter } = useCharacterStore()
-
-  const officialSkills = [
-    "academics",
-    "athletics",
-    "burglary",
-    "contacts",
-    "crafts",
-    "deceive",
-    "drive",
-    "empathy",
-    "fight",
-    "investigate",
-    "lore",
-    "notice",
-    "physique",
-    "provoke",
-    "rapport",
-    "resources",
-    "shoot",
-    "stealth",
-    "will",
-  ]
 
   useEffect(() => {
     const updateCharacterSkills = (characterSkills: { id: string; name: string; bonus: number }[]) => {

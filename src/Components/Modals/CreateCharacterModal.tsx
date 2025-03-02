@@ -24,10 +24,11 @@ import {
 import { useEffect, useRef, useState } from "react"
 import { useThemeStore } from "../../Stores/ThemeStore"
 import { useClickOutside, useMediaQuery } from "@mantine/hooks"
-import { IconCircleFilled, IconInfoCircle, IconPlus } from "@tabler/icons-react"
+import { IconCircleFilled, IconInfoCircle, IconPlus, IconTrash } from "@tabler/icons-react"
 import { modals } from "@mantine/modals"
 import { useTranslation } from "react-i18next"
 import { notifications } from "@mantine/notifications"
+import { officialSkills } from "../updateCharacterSkills"
 
 const colors = ["gray", "red", "pink", "grape", "violet", "indigo", "blue", "cyan", "teal", "green", "lime", "yellow", "orange"] // Comes here https://yeun.github.io/open-color/
 
@@ -151,8 +152,18 @@ function CreateCharacterModal(props: createCharacterModalProps) {
     }
     setIsOnSkillCreating(false)
     notifications.show({
-      title: "Cannot create same skill",
-      message: "This skill is already exist in your character's skills",
+      title: t("create-modal.same-skill"),
+      message: t("create-modal.same-skill-desc"),
+    })
+  }
+
+  function handleDeleteSkill(id: string) {
+    const newSkills = form.getValues().skills.filter((s) => s.id !== id)
+    form.setValues({ skills: newSkills })
+    notifications.show({
+      title: t("create-modal.skill-deleted"),
+      message: t("create-modal.skill-deleted-desc"),
+      color: "red",
     })
   }
 
@@ -334,19 +345,39 @@ function CreateCharacterModal(props: createCharacterModalProps) {
               </Card.Section>
 
               <Grid align="end" mt="sm">
-                {form.getValues().skills.map((s, index) => (
-                  <Grid.Col span={{ base: 12, md: 4, lg: 3 }} key={index}>
-                    <NumberInput
-                      allowDecimal={false}
-                      size="sm"
-                      radius="md"
-                      prefix={s.bonus > 0 ? "+" : undefined}
-                      label={s.name}
-                      key={form.key("skills." + index + ".bonus")}
-                      {...form.getInputProps("skills." + index + ".bonus")}
-                    />
-                  </Grid.Col>
-                ))}
+                {form.getValues().skills.map((s, index) =>
+                  officialSkills.includes(s.id) ? (
+                    <Grid.Col span={{ base: 12, md: 4, lg: 3 }} key={index}>
+                      <NumberInput
+                        allowDecimal={false}
+                        size="sm"
+                        radius="md"
+                        prefix={s.bonus > 0 ? "+" : undefined}
+                        label={s.name}
+                        key={form.key("skills." + index + ".bonus")}
+                        {...form.getInputProps("skills." + index + ".bonus")}
+                      />
+                    </Grid.Col>
+                  ) : (
+                    <Grid.Col span={{ base: 12, md: 4, lg: 3 }} key={index}>
+                      <Group align="end" gap={4} wrap="nowrap">
+                        <NumberInput
+                          allowDecimal={false}
+                          w="90%"
+                          size="sm"
+                          radius="md"
+                          prefix={s.bonus > 0 ? "+" : undefined}
+                          label={s.name}
+                          key={form.key("skills." + index + ".bonus")}
+                          {...form.getInputProps("skills." + index + ".bonus")}
+                        />
+                        <Button onClick={() => handleDeleteSkill(s.id)} radius="md" variant="default" px={8} size="sm">
+                          <IconTrash />
+                        </Button>
+                      </Group>
+                    </Grid.Col>
+                  ),
+                )}
                 <Grid.Col span={{ base: 12, md: 4, lg: 3 }}>
                   <Stack gap={4}>
                     <Text size="sm">New Skill</Text>

@@ -129,7 +129,11 @@
     "created-desc-1": "Bir efsane daha doğdu: ",
     "created-desc-2": ". Harika bir isim :D",
     "edited": "Karakteriniz başarıyla düzenlendi",
-    "edited-desc": "Yeni değişiklikler ile mutlusundur umarım  :D"
+    "edited-desc": "Yeni değişiklikler ile mutlusundur umarım  :D",
+    "same-skill": "Aynı isimli bir yetenek oluşturamazsın",
+    "same-skill-desc": "Böyle bir yetenek zaten karakterinizde mevcut",
+    "skill-deleted": "Silindi",
+    "skill-deleted-desc": "Oluşturduğunuz yetenek başarıyla silindi"
   },
   "import-modal": {
     "modal-title": "JSON formatında olan karakterinizi yapıştırınız",

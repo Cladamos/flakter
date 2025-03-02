@@ -129,7 +129,11 @@
     "created-desc-1": "Have fun with your ",
     "created-desc-2": ". Such a great name :D",
     "edited": "Your character succesfuly edited",
-    "edited-desc": "Have fun with your new changes"
+    "edited-desc": "Have fun with your new changes",
+    "same-skill": "Cannot create same skill",
+    "same-skill-desc": "This skill is already exist in your character's skills",
+    "skill-deleted": "Deleted",
+    "skill-deleted-desc": "Your skill is deleted"
   },
   "import-modal": {
     "modal-title": "Paste your character JSON",
