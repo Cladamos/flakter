@@ -33,6 +33,8 @@ import { useTranslation } from "react-i18next"
 
 function CharacterSheet() {
   const [animate, setAnimate] = useState(false)
+  const [animateCard, setAnimateCard] = useState(false)
+  const [animateSkill, setAnimateSkill] = useState<number | null>(null)
   const [isNotesView, setIsNotesView] = useState<boolean>(false)
   const [diceRolls, setDiceRolls] = useState<number[]>([1, 0, -1, 0])
   const diceRollSum = diceRolls.reduce((acc, val) => acc + val, 0)
@@ -44,6 +46,8 @@ function CharacterSheet() {
   const isMobile = useMediaQuery(`(max-width: ${em(1200)})`)
 
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])
+  const timeoutRefScroll = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const timeoutRefBorder = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   if (currCharacter) {
     const basicValues = [
@@ -65,7 +69,7 @@ function CharacterSheet() {
 
     const { scrollIntoView: scrollIntoViewDice, targetRef: targetRefDice } = useScrollIntoView<HTMLDivElement>({
       offset: 60,
-      duration: 750,
+      duration: 500,
     })
 
     useEffect(() => {
@@ -85,17 +89,34 @@ function CharacterSheet() {
     }
 
     function handleDiceRoll(modifer: number) {
+      if (timeoutRefScroll.current) {
+        clearTimeout(timeoutRefScroll.current)
+      }
       setDiceRolls(RollDice())
       setModifier(modifer)
+      handleDiceCardAnimation()
       setAnimate(true)
       if (isMobile) {
         scrollIntoViewDice({
           alignment: "start",
         })
       }
-      setTimeout(() => {
+      timeoutRefScroll.current = setTimeout(() => {
         setAnimate(false)
+        timeoutRefScroll.current = null
       }, 250)
+    }
+
+    function handleDiceCardAnimation() {
+      if (timeoutRefBorder.current) {
+        clearTimeout(timeoutRefBorder.current)
+      }
+      setAnimateCard(true)
+      timeoutRefBorder.current = setTimeout(() => {
+        setAnimateCard(false)
+        setAnimateSkill(null)
+        timeoutRefBorder.current = null
+      }, 2000)
     }
 
     return (
@@ -279,7 +300,13 @@ function CharacterSheet() {
                     ))}
                   </Grid>
                 </Card>
-                <Card style={isMobile ? { textAlign: "center" } : undefined} withBorder shadow="sm" radius="md">
+                <Card
+                  style={isMobile ? { textAlign: "center" } : undefined}
+                  withBorder
+                  shadow="sm"
+                  radius="md"
+                  bd={animateCard ? "1px solid var(--mantine-primary-color-filled)" : undefined}
+                >
                   {isMobile ? (
                     <Group ref={targetRefDice} w="100%" justify="center">
                       <Group className="paper-hover" onClick={() => handleDiceRoll(0)}>
@@ -343,9 +370,17 @@ function CharacterSheet() {
                     <Text>{t("character-sheet.skills")}</Text>
                   </CardSection>
                   <Grid mt="xs">
-                    {currCharacter.skills.map((s) => (
+                    {currCharacter.skills.map((s, index) => (
                       <Grid.Col span={{ base: 12, md: 4, lg: 3 }} key={s.name}>
-                        <Paper onClick={() => handleDiceRoll(s.bonus)} p="xs" withBorder className="paper-hover">
+                        <Paper
+                          onClick={() => {
+                            handleDiceRoll(s.bonus), setAnimateSkill(index)
+                          }}
+                          p="xs"
+                          withBorder
+                          bd={animateSkill === index ? "1px solid var(--mantine-primary-color-filled)" : undefined}
+                          className="paper-hover"
+                        >
                           <Group>
                             <IconCircle />
                             <Text size="sm">{s.name + ": " + (s.bonus === 0 || s.bonus < 0 ? s.bonus : "+" + s.bonus)}</Text>
