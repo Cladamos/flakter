@@ -182,7 +182,7 @@ function CharacterSheet() {
                               icon={IconCircleFilled}
                               checked={bool}
                               onChange={() =>
-                                b.text === "Physical Stress"
+                                b.text === t("character-sheet.physical-stress")
                                   ? updateCharacter(currCharacter.id, {
                                       ...currCharacter,
                                       physicalStress: currCharacter.physicalStress.map((v, i) => (i === index ? !v : v)),
