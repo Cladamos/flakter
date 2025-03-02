@@ -58,11 +58,11 @@ function CreateCharacterModal(props: createCharacterModalProps) {
 
   const basics = [
     { label: t("create-modal.name"), placeholder: "Geoff Jones", key: "name" },
-    { label: t("create-modal.high-concept"), placeholder: "Noir Style hard punches and hard liquor detective", key: "aspects.highConcept" },
-    { label: t("create-modal.trouble"), placeholder: "I can't run from my past life but I can watch him trying to catch me", key: "aspects.trouble" },
-    { label: t("create-modal.relationship"), placeholder: "Knows all the cool car shops", key: "aspects.relationship" },
-    { label: t("create-modal.other-aspects"), placeholder: "Liquor and revenge keep me going", key: "aspects.otherAspect" },
-    { label: t("create-modal.other-aspects"), placeholder: "I won't die without revealing the truth", key: "aspects.secondOtherAspect" },
+    { label: t("create-modal.high-concept"), placeholder: t("create-modal.high-concept-placeholder"), key: "aspects.highConcept" },
+    { label: t("create-modal.trouble"), placeholder: t("create-modal.trouble-placeholder"), key: "aspects.trouble" },
+    { label: t("create-modal.relationship"), placeholder: t("create-modal.relationship-placeholder"), key: "aspects.relationship" },
+    { label: t("create-modal.other-aspects"), placeholder: t("create-modal.other-aspect-placeholder"), key: "aspects.otherAspect" },
+    { label: t("create-modal.other-aspects"), placeholder: t("create-modal.second-other-aspect-placeholder"), key: "aspects.secondOtherAspect" },
   ]
 
   const stunts = [
