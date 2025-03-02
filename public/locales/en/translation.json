@@ -59,8 +59,8 @@
     "cancel-button": "Cancel",
     "delete-button": "Delete",
     "title": "Your character succesfuly deleted",
-    "notfication-1:": "Your ",
-    "notfication-2:": "gone to void D:"
+    "notfication-1": "Your ",
+    "notfication-2": " gone to void D:"
   },
   "select-modal": {
     "modal-title": "Select your character",

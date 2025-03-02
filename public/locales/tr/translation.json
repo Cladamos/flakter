@@ -59,8 +59,8 @@
     "cancel-button": "İptal et",
     "delete-button": "Sil",
     "title": "Karakteriniz başarıyla silindi",
-    "notfication-1:": "Canım ",
-    "notfication-2:": "uzay boşluğunda kayboldu D:"
+    "notfication-1": "",
+    "notfication-2": " uzay boşluğunda kayboldu D:"
   },
   "select-modal": {
     "modal-title": "Karakterini seç",
