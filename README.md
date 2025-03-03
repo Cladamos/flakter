@@ -1,50 +1,25 @@
-# React + TypeScript + Vite
+# Flakter: A Fate RPG Online Tool
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Introduction
 
-Currently, two official plugins are available:
+Welcome to Flakter, a web application designed to enhance your online Fate RPG experience. The site includes several key features to help you manage your game more efficiently, allowing you to focus on storytelling and strategy.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Character Creation:** Easily create and manage Fate RPG characters with an intuitive interface.
+- **Note Taking:** Keep track of your campaign details, character notes, and important events in one place.
+- **Customizable Skills:** Modify and personalize skill sets to fit your preferred Fate RPG playstyle.
+- **Turkish Language Support:** Enjoy the game in Turkish with built-in language support.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Goal
 
-- Configure the top-level `parserOptions` property like this:
+The goal of this project is to provide a convenient, all-in-one tool for those who play Fate RPG online.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Try It Out
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+You can try out the site here: [Flakter](https://flakter.vercel.app/)
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Feedback
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+Your feedback is invaluable in improving the site. If you have any suggestions or thoughts, please share them through this form: [Feedback Form](https://forms.gle/NbDq7W1MUrSgRZXr7)
+
